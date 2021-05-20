@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ThermoconnectApplication {
 
 	public static void main(String[] args) {
+    	System.out.println("pipi");
 		SpringApplication.run(ThermoconnectApplication.class, args);
 	}
 

@@ -1,13 +1,13 @@
-package me.dcal.thermoconnect;
-
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-
-public class ServletInitializer extends SpringBootServletInitializer {
-
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(ThermoconnectApplication.class);
-	}
-
-}
+//package me.dcal.thermoconnect;
+//
+//import org.springframework.boot.builder.SpringApplicationBuilder;
+//import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+//
+//public class ServletInitializer extends SpringBootServletInitializer {
+//
+//	@Override
+//	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+//		return application.sources(ThermoconnectApplication.class);
+//	}
+//
+//}
