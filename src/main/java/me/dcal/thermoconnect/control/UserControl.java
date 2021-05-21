@@ -7,9 +7,11 @@ import java.net.URL;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import me.dcal.thermoconnect.model.User;
+import me.dcal.thermoconnect.model.api.BodyConnexion;
 import me.dcal.thermoconnect.repository.UserRepository;
 
 
@@ -26,16 +29,13 @@ import me.dcal.thermoconnect.repository.UserRepository;
 public class UserControl {
 	@Autowired
 	UserRepository myuserrepo;
-	@GetMapping("/ariuser")
-    public String Register() {
-		List<User> list=myuserrepo.findAll();
-		System.out.println("PRINT USER");
-		for(User u:list)
-		{
-			System.out.println(u);
-		}
-        return myuserrepo.findById("test").get().toString();
-		
+	@PostMapping(path = "/connexion",consumes = "application/json", produces = "application/json")
+    @ResponseBody
+	public Boolean check(@RequestBody BodyConnexion body,HttpServletRequest request,
+            HttpServletResponse response, Model model) {
+		System.out.println("body =" +body);
+       return body.getLogin().equals("test") && body.getPassword().equals("test")  ;
+
     }
 
 
