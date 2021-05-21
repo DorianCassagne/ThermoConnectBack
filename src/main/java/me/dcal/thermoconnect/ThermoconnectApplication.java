@@ -12,7 +12,6 @@ import me.dcal.thermoconnect.file.FileStorageProperties;
 public class ThermoconnectApplication {
 
 	public static void main(String[] args) {
-    	System.out.println("pipi");
 		SpringApplication.run(ThermoconnectApplication.class, args);
 	}
 
