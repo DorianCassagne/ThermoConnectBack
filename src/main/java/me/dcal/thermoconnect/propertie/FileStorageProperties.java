@@ -1,4 +1,4 @@
-package me.dcal.thermoconnect.file;
+package me.dcal.thermoconnect.propertie;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
