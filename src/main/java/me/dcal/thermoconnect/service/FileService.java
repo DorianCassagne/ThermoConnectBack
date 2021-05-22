@@ -19,8 +19,7 @@ public class FileService {
 
 	public FileService(FileStorageProperties fileStorageProperties) {
 		this.fileStoragePath = Paths.get(fileStorageProperties.getUploadDir()).toString();
-
-		System.out.println(fileStoragePath);
+	
 		File file = new File(fileStoragePath);
 		boolean dirCreated = file.mkdir();
 	}
@@ -34,14 +33,14 @@ public class FileService {
 	}
 
 	public FileSystemResource getFile(String filename) {
-		return new FileSystemResource(new File(fileStoragePath+filename));
+		return new FileSystemResource(new File(fileStoragePath+"/"+filename));
 	}
 
 	public boolean renameFile( String newfilename,String old,  String filename) {
 
 		try{
 
-			new File(fileStoragePath+"/"+old).renameTo(new File(fileStoragePath+newfilename));
+			new File(fileStoragePath+"/"+old).renameTo(new File(fileStoragePath+"/"+newfilename));
 
 		}catch(Exception e){
 			System.out.println(e);
@@ -58,7 +57,7 @@ public class FileService {
 			byte barr[]=file.getBytes();
 
 			BufferedOutputStream bout=new BufferedOutputStream(
-					new FileOutputStream(fileStoragePath+filename));
+					new FileOutputStream(fileStoragePath+"/"+filename));
 			bout.write(barr);
 			bout.flush();
 			bout.close();
@@ -69,7 +68,7 @@ public class FileService {
 	}
 
 	public boolean deleteFile(String filename) {
-		File file = new File(fileStoragePath + filename);
+		File file = new File(fileStoragePath +"/"+ filename);
 
 		return file.delete();
 

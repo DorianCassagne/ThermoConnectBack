@@ -17,7 +17,7 @@ import me.dcal.thermoconnect.id.TerrariumDataId;
 public class TerrariumData {
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "idTerrarium")
+	@JoinColumn(name = "id_terrarium")
 	Terrarium idTerrarium;
 	@Id
 	@Column(name="time")

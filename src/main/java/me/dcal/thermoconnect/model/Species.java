@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Table(name="species", schema = "thermoconnect")
 public class Species {
 @Id
-@Column(name="speciesName", unique=true)
+@Column(name="species_name", unique=true)
 String speciesName;
 @Column(name="description")
 String description;

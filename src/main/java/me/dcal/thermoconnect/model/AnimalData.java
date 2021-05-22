@@ -1,5 +1,9 @@
 package me.dcal.thermoconnect.model;
 
-public class AnimalData {
+import java.sql.Date;
 
+public class AnimalData {
+ int idAnimal;
+ Date dateAnimalData;
+ 
 }
