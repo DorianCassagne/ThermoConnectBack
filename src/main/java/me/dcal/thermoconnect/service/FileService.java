@@ -58,5 +58,12 @@ public static final String PATH = "/tmp/thermoconnect/";
 		return "okay\n";
 
 	}
+	
+	public boolean deleteFile(String filename) {
+		File file = new File(PATH + filename);
+    
+		return file.delete();
+    	
+	}
 
 }
