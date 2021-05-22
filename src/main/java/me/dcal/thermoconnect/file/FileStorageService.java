@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import me.dcal.thermoconnect.service.FileStorageProperties;
+import me.dcal.thermoconnect.propertie.FileStorageProperties;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

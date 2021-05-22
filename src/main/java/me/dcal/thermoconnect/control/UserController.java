@@ -26,7 +26,7 @@ import me.dcal.thermoconnect.repository.UserRepository;
 
 
 @RestController
-public class UserControl {
+public class UserController {
 	@Autowired
 	UserRepository myuserrepo;
 	@PostMapping(path = "/connexion",consumes = "application/json", produces = "application/json")
