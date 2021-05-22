@@ -53,12 +53,14 @@ public class DocumentController {
 	@PostMapping(path = "/upload",consumes = {MediaType.APPLICATION_JSON_VALUE,
 			MediaType.MULTIPART_FORM_DATA_VALUE}, produces = "application/json")
 	@ResponseBody
-	public Integer addfile(@RequestPart("description")  BodyConnexion body,@RequestPart("files") List<MultipartFile> files, HttpServletRequest request,
+	public Integer addfile(@RequestPart("description")  BodyConnexion body,@RequestPart("files") List<MultipartFile> files,@RequestPart("picture") MultipartFile picture, HttpServletRequest request,
 			HttpServletResponse response, Model model) {
 		System.out.println("upload");
 		System.out.println(body);
+		System.out.println();
 		fileservice.saveFile(files.get(0), "abc1.png");
 		fileservice.saveFile(files.get(1), "abc2.png");
+		fileservice.saveFile(picture, "pic.png");
 		return 1;
 	}
 	@GetMapping("/file/getFile/{file}")
