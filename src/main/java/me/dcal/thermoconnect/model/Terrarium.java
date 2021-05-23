@@ -1,6 +1,8 @@
 package me.dcal.thermoconnect.model;
 
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,17 +16,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import me.dcal.thermoconnect.model.api.BodySpecies;
+import me.dcal.thermoconnect.model.api.BodyTerrarium;
+
 
 @Entity
 @Table(name="terrarium", schema = "thermoconnect")
 public class Terrarium {
-//	@GeneratedValue(strategy = GenerationType.AUTO)
-
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Id
 	@Column(name="id_terrarium", unique=true)
     Integer idTerrarium;
-//	@Column(name="idTerrarium", unique=true)
-//	long idTerrarium;
 	@Column(name="temperature_min")
 	double temperatureMin;
 	@Column(name="temperature_max")
@@ -35,12 +37,35 @@ public class Terrarium {
 	Time startLightTime;
 	@Column(name="stop_light_time")
 	Time stopLightTime;
+	@Column(name="size_terrarium")
+	String size;
+	@Column(name="humidity_terrarium")
+	double humidityTerrarium;
+	
+
+
+
 	@ManyToOne
 	@JoinColumn(name = "username")
 	User username; 
-//	@OneToMany(cascade = CascadeType.ALL,mappedBy = "idTerrarium")
-//	Set<TerrariumData> mesdatas;
+	@OneToMany( targetEntity=Animal.class, mappedBy="idTerrarium" )
+	private List<Animal> animals = new ArrayList<>();
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "terrariumDataId.idTerrarium")
+	Set<TerrariumData> terrariumDatas;
 	
+	
+	public BodyTerrarium toBody() {
+		BodyTerrarium bt = new BodyTerrarium();
+		bt.nameTerrarium=nameTerrarium;
+		bt.size=size;
+		bt.startLightTime=startLightTime;
+		bt.stopLightTime=startLightTime;
+		bt.temperatureMax=temperatureMax;
+		bt.temperatureMin=temperatureMin;
+		bt.idTerrarium=idTerrarium;
+		bt.humidityTerrarium=humidityTerrarium;
+		return bt;
+	}
 	
 	
 	
@@ -139,6 +164,16 @@ public class Terrarium {
 		this.username = username;
 	}
 
+	public String getSize() {
+		return size;
+	}
+
+
+
+
+	public void setSize(String size) {
+		this.size = size;
+	}
 
 
 

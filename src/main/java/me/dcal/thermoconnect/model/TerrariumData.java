@@ -3,6 +3,7 @@ package me.dcal.thermoconnect.model;
 import java.sql.Time;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -12,34 +13,43 @@ import javax.persistence.Table;
 import me.dcal.thermoconnect.id.TerrariumDataId;
 
 @Entity
-@Table(name="terrariumdata", schema = "thermoconnect")
-@IdClass(TerrariumDataId.class)
+@Table(name="terrarium_data", schema = "thermoconnect")
+//@IdClass(TerrariumDataId.class)
 public class TerrariumData {
-	@Id
-	@ManyToOne
-	@JoinColumn(name = "id_terrarium")
-	Terrarium idTerrarium;
-	@Id
-	@Column(name="time")
-	Time time;
+	
+	@EmbeddedId
+	TerrariumDataId terrariumDataId;
+	
+
+
 	@Column(name="temperature")
 	double temperature;
 	@Column(name="humidity")
 	double humidity;
+	
 	public TerrariumData() {
 		
 	}
+	
+	public TerrariumDataId getTerrariumDataId() {
+		return terrariumDataId;
+	}
+
+	public void setTerrariumDataId(TerrariumDataId terrariumDataId) {
+		this.terrariumDataId = terrariumDataId;
+	}
+	
 	public Terrarium getIdTerrarium() {
-		return idTerrarium;
+		return terrariumDataId.getIdTerrarium();
 	}
 	public void setIdTerrarium(Terrarium idTerrarium) {
-		this.idTerrarium = idTerrarium;
+		this.terrariumDataId.setIdTerrarium(idTerrarium);
 	}
 	public Time getTime() {
-		return time;
+		return terrariumDataId.getTime();
 	}
 	public void setTime(Time time) {
-		this.time = time;
+		this.terrariumDataId.setTime(time);
 	}
 	public double getTemperature() {
 		return temperature;
