@@ -3,18 +3,25 @@ package me.dcal.thermoconnect.id;
 import java.io.Serializable;
 import java.sql.Time;
 
-
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import me.dcal.thermoconnect.model.Terrarium;
 
+@Embeddable
 public class TerrariumDataId implements Serializable {
 	
-	Terrarium idTerrarium;
-	
+	@ManyToOne
+	@JoinColumn(name = "id_terrarium")
+	Terrarium idTerrarium; 
+	@Column(name="time")
 	Time time;
 
+	public TerrariumDataId() {
+	}
 	public TerrariumDataId(Terrarium idTerrarium, Time time) {
-		super();
 		this.idTerrarium = idTerrarium;
 		this.time = time;
 	}
@@ -35,37 +42,6 @@ public class TerrariumDataId implements Serializable {
 		this.time = time;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((idTerrarium == null) ? 0 : idTerrarium.hashCode());
-		result = prime * result + ((time == null) ? 0 : time.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		TerrariumDataId other = (TerrariumDataId) obj;
-		if (idTerrarium == null) {
-			if (other.idTerrarium != null)
-				return false;
-		} else if (!idTerrarium.equals(other.idTerrarium))
-			return false;
-		if (time == null) {
-			if (other.time != null)
-				return false;
-		} else if (!time.equals(other.time))
-			return false;
-		return true;
-	}
-	
 
 
 

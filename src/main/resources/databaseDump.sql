@@ -34,7 +34,7 @@ CREATE SCHEMA thermoconnect;
 CREATE TABLE thermoconnect.animal (
     "id_animal" integer NOT NULL,
     "id_terrarium" integer NOT NULL,
-    "id_species" character varying(32) NOT NULL,
+    "species_name" character varying(32) NOT NULL,
     "name_animal" character varying(32) NOT NULL,
     sex boolean,
     "date_of_birth" date,
@@ -58,7 +58,7 @@ CREATE TABLE thermoconnect."animal_data" (
 
 --
 -- TOC entry 199 (class 1259 OID 33432)
--- Name: animal_picture; Type: TABLE; Schema: thermoconnect; Owner: -
+-- Name: animal_picture; Type: TABLE; Schema: thermoconnect; Owner: 
 --
 
 CREATE TABLE thermoconnect."animal_picture" (
@@ -115,7 +115,8 @@ CREATE TABLE thermoconnect.terrarium (
     "start_light_time" time without time zone,
     "stop_light_time" time without time zone,
     "temperature_max" double precision,
-    "temperature_min" double precision
+    "temperature_min" double precision,
+    "humidity_terrarium" double precision
 );
 
 
@@ -282,11 +283,11 @@ ALTER TABLE ONLY thermoconnect."animal_picture"
 
 --
 -- TOC entry 2789 (class 2606 OID 33483)
--- Name: animal animal_id_species_fkey; Type: FK CONSTRAINT; Schema: thermoconnect; Owner: -
+-- Name: animal animal_species_name_fkey; Type: FK CONSTRAINT; Schema: thermoconnect; Owner: -
 --
 
 ALTER TABLE ONLY thermoconnect.animal
-    ADD CONSTRAINT "animal_id_species_fkey" FOREIGN KEY ("id_species") REFERENCES thermoconnect.species("species_name");
+    ADD CONSTRAINT "animal_species_name_fkey" FOREIGN KEY ("species_name") REFERENCES thermoconnect.species("species_name");
 
 
 --

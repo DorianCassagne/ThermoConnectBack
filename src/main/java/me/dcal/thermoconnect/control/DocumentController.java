@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
+import me.dcal.thermoconnect.model.api.BodyAnimal;
 import me.dcal.thermoconnect.model.api.BodyConnexion;
 import me.dcal.thermoconnect.service.FileService;
 @RestController
@@ -50,19 +51,20 @@ public class DocumentController {
 	
 	
 	
-	@PostMapping(path = "/upload",consumes = {MediaType.APPLICATION_JSON_VALUE,
-			MediaType.MULTIPART_FORM_DATA_VALUE}, produces = "application/json")
-	@ResponseBody
-	public Integer addfile(@RequestPart("description")  BodyConnexion body,@RequestPart("files") List<MultipartFile> files,@RequestPart("picture") MultipartFile picture, HttpServletRequest request,
-			HttpServletResponse response, Model model) {
-		System.out.println("upload");
-		System.out.println(body);
-		System.out.println();
-		fileservice.saveFile(files.get(0), "abc1.png");
-		fileservice.saveFile(files.get(1), "abc2.png");
-		fileservice.saveFile(picture, "pic.png");
-		return 1;
-	}
+//	@PostMapping(path = "/ajoutAnimal",consumes = {MediaType.APPLICATION_JSON_VALUE,
+//			MediaType.MULTIPART_FORM_DATA_VALUE}, produces = "application/json")
+//	@ResponseBody
+//	public Integer addfile(@RequestPart("description")  BodyAnimal body,@RequestPart("files") List<MultipartFile> files
+//			,@RequestPart("picture") MultipartFile picture, HttpServletRequest request,
+//			HttpServletResponse response, Model model) {
+//		System.out.println("upload");
+//		System.out.println(body);
+//		System.out.println();
+//		fileservice.saveFile(files.get(0), "abc1.png");
+//		fileservice.saveFile(files.get(1), "abc2.png");
+//		fileservice.saveFile(picture, "pic.png");
+//		return 1;
+//	}
 	@GetMapping("/file/getFile/{file}")
 	public FileSystemResource getPublicFile(@PathVariable("file") String filename) {
 		return new FileSystemResource(new File(PATH+filename));
