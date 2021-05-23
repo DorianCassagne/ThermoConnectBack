@@ -26,11 +26,11 @@ public class Terrarium {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Id
 	@Column(name="id_terrarium", unique=true)
-    Integer idTerrarium;
+	Integer idTerrarium;
 	@Column(name="temperature_min")
-	double temperatureMin;
+	Double temperatureMin;
 	@Column(name="temperature_max")
-	double temperatureMax;
+	Double temperatureMax;
 	@Column(name="name_terrarium")
 	String nameTerrarium;
 	@Column(name="start_light_time")
@@ -38,12 +38,10 @@ public class Terrarium {
 	@Column(name="stop_light_time")
 	Time stopLightTime;
 	@Column(name="size_terrarium")
-	String size;
+	String sizeTerrarium;
 	@Column(name="humidity_terrarium")
-	double humidityTerrarium;
-	
-
-
+	private
+	Double humidityTerrarium;
 
 	@ManyToOne
 	@JoinColumn(name = "username")
@@ -52,23 +50,37 @@ public class Terrarium {
 	private List<Animal> animals = new ArrayList<>();
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "terrariumDataId.idTerrarium")
 	Set<TerrariumData> terrariumDatas;
-	
-	
-	public BodyTerrarium toBody() {
-		BodyTerrarium bt = new BodyTerrarium();
-		bt.nameTerrarium=nameTerrarium;
-		bt.size=size;
-		bt.startLightTime=startLightTime;
-		bt.stopLightTime=startLightTime;
-		bt.temperatureMax=temperatureMax;
-		bt.temperatureMin=temperatureMin;
-		bt.idTerrarium=idTerrarium;
-		bt.humidityTerrarium=humidityTerrarium;
-		return bt;
-	}
-	
-	
-	
+
+
+//	public Terrarium(BodyTerrarium bt) {
+//		this.setUsername(userRepository.getOne(username));
+//		t.setStartLightTime(startTime);
+//		t.setStopLightTime(stopTime);
+//		t.setTemperatureMax(temperatureMax);
+//		t.setTemperatureMin(temperatureMin);
+//		t.setSize(sizeTerrarium);
+//		terrariumRepository.save(t);
+//	}
+//	public Terrarium() {
+//
+//	}
+//
+//
+//	public BodyTerrarium toBody() {
+//		BodyTerrarium bt = new BodyTerrarium();
+//		bt.nameTerrarium=nameTerrarium;
+//		bt.size=size;
+//		bt.startLightTime=startLightTime;
+//		bt.stopLightTime=startLightTime;
+//		bt.temperatureMax=temperatureMax;
+//		bt.temperatureMin=temperatureMin;
+//		bt.idTerrarium=idTerrarium;
+//		bt.humidityTerrarium=humidityTerrarium;
+//		return bt;
+//	}
+
+
+
 	public int getIdTerrarium() {
 		return idTerrarium;
 	}
@@ -83,28 +95,28 @@ public class Terrarium {
 
 
 
-	public double getTemperatureMin() {
+	public Double getTemperatureMin() {
 		return temperatureMin;
 	}
 
 
 
 
-	public void setTemperatureMin(double temperatureMin) {
+	public void setTemperatureMin(Double temperatureMin) {
 		this.temperatureMin = temperatureMin;
 	}
 
 
 
 
-	public double getTemperatureMax() {
+	public Double getTemperatureMax() {
 		return temperatureMax;
 	}
 
 
 
 
-	public void setTemperatureMax(double temperatureMax) {
+	public void setTemperatureMax(Double temperatureMax) {
 		this.temperatureMax = temperatureMax;
 	}
 
@@ -164,23 +176,34 @@ public class Terrarium {
 		this.username = username;
 	}
 
-	public String getSize() {
-		return size;
+	public String getSizeTerrarium() {
+		return sizeTerrarium;
 	}
 
 
 
 
-	public void setSize(String size) {
-		this.size = size;
+	public void setSizeTerrarium(String size) {
+		this.sizeTerrarium = size;
 	}
 
 
 
-	public Terrarium() {
-		
+
+	public Double getHumidityTerrarium() {
+		return humidityTerrarium;
 	}
-	
+
+
+
+
+	public void setHumidityTerrarium(Double humidityTerrarium) {
+		this.humidityTerrarium = humidityTerrarium;
+	}
+
+
+
+
 
 
 }

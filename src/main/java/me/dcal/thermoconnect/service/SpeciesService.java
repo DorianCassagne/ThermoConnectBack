@@ -7,6 +7,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import me.dcal.thermoconnect.Factory;
 import me.dcal.thermoconnect.model.Species;
 import me.dcal.thermoconnect.model.api.BodySpecies;
 import me.dcal.thermoconnect.repository.SpeciesRepository;
@@ -20,7 +21,7 @@ public class SpeciesService {
 		List<Species> lspe =  speciesRepository.findAll();
 		List<BodySpecies> listBody = new ArrayList<>();
 		for (Species species : lspe) {
-			listBody.add(species.toBody());
+			listBody.add(Factory.factory.toBody(species));
 		}
 		return listBody;
 	}

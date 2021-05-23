@@ -20,9 +20,7 @@ public class Species {
 	@OneToMany( targetEntity=Animal.class, mappedBy="idSpecies" )
 	private List<Animal> animals = new ArrayList<>();
 
-	public BodySpecies toBody() {
-		return new BodySpecies(speciesName,description);
-	}
+	
 
 	public Species() {
 

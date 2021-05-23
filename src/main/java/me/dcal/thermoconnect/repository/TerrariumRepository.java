@@ -13,4 +13,5 @@ import me.dcal.thermoconnect.model.User;
 public interface TerrariumRepository extends JpaRepository<Terrarium,Integer>{
 	Optional<Terrarium> findById(Integer idTerrarium);
 	List<Terrarium> findAll();
+	List<Terrarium> findAllByUsername(Optional<User> optional);
 }

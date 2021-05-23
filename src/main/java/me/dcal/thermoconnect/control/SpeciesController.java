@@ -31,7 +31,7 @@ public class SpeciesController {
 	@ResponseBody
 	public List<BodySpecies> check(@RequestBody BodyConnexion bodyCo,HttpServletRequest request,
 			HttpServletResponse response, Model model) {
-		if(connexionService.validUser(bodyCo.getLogin(), bodyCo.getPassword()))
+		if(connexionService.validUser( bodyCo))
 			return speciesService.listSpecies();
 		return null;
 	}
