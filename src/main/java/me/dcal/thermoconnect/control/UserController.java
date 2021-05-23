@@ -20,7 +20,7 @@ public class UserController {
 	@ResponseBody
 	public Boolean connexion(@RequestBody BodyConnexion body,HttpServletRequest request,
 			HttpServletResponse response, Model model) {
-		return connexionService.validUser(body.getLogin(), body.getPassword());
+		return connexionService.validUser(body);
 		
 	}
 	

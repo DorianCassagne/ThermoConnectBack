@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import me.dcal.thermoconnect.model.User;
+import me.dcal.thermoconnect.model.api.BodyConnexion;
 import me.dcal.thermoconnect.repository.UserRepository;
 
 @Service
@@ -16,8 +17,10 @@ public class ConnexionService {
 	public boolean existingUser(String username) {
 		return userRepository.existsById(username);
 	}
-	
-	public boolean validUser(String username,String password) {
+	public boolean validUser(BodyConnexion bc) {
+		return validUser(bc.getLogin(),bc.getPassword());
+	}
+	private boolean validUser(String username,String password) {
 		Optional<User> opUser = userRepository.findById(username);
 		if(opUser.isPresent()) {
 			return opUser.get().getPassword().equals(password);
