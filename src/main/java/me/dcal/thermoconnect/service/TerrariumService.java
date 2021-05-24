@@ -21,9 +21,10 @@ public class TerrariumService {
 	TerrariumRepository terrariumRepository;
 	@Autowired
 	UserRepository userRepository;
-	
+	@Autowired
+	Factory factory;
 	public boolean addTerrarium(BodyTerrarium bt) {
-		Terrarium t = Factory.factory.toEntity(bt);
+		Terrarium t = factory.toEntity(bt);
 		terrariumRepository.save(t);
 		return true;
 	}
@@ -32,7 +33,7 @@ public class TerrariumService {
 		List<Terrarium> ts = terrariumRepository.findAllByUsername(userRepository.findById(bc.getLogin()));
 		List<BodyTerrarium> bts = new ArrayList<>();
 		for (Terrarium terrarium : ts) {
-			bts.add(Factory.factory.toBody(terrarium));
+			bts.add(factory.toBody(terrarium));
 		}
 		
 		return bts;

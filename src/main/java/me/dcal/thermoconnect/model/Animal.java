@@ -1,7 +1,7 @@
 package me.dcal.thermoconnect.model;
 
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -9,26 +9,25 @@ import javax.persistence.*;
 @Entity
 @Table(name="animal", schema = "thermoconnect")
 public class Animal {
-	@GeneratedValue(strategy = GenerationType.AUTO)
+
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_animal", unique=true)
-	int idAnimal;
+	Integer idAnimal;
 	@ManyToOne
 	@JoinColumn(name="id_terrarium", nullable=false)
 	Terrarium idTerrarium;
 	@ManyToOne 
-	@JoinColumn(name="id_species", nullable=false)
-	Species idSpecies;
+	@JoinColumn(name="species_name", nullable=false)
+	Species species;
 	@Column(name="name_animal")
 	String nameAnimal;
 	@Column(name="sex")
-	boolean sex;
+	Boolean sex;
 	@Column(name="date_of_birth")
 	Date dateOfBirth;
 	@Column(name="description")
 	String description;
-	@Column(name="text")
-	String text;
 	@Column(name="url_picture")
 	String urlPicture;
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "animalDataId.idAnimal")
@@ -36,4 +35,65 @@ public class Animal {
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "animalPictureId.idAnimal")
 	Set<AnimalPicture> animalPictures;
 
+	
+	public Integer getIdAnimal() {
+		return idAnimal;
+	}
+	public void setIdAnimal(Integer idAnimal) {
+		this.idAnimal = idAnimal;
+	}
+	public Terrarium getIdTerrarium() {
+		return idTerrarium;
+	}
+	public void setIdTerrarium(Terrarium idTerrarium) {
+		this.idTerrarium = idTerrarium;
+	}
+	public Species getSpecies() {
+		return species;
+	}
+	public void setSpecies(Species idSpecies) {
+		this.species = idSpecies;
+	}
+	public String getNameAnimal() {
+		return nameAnimal;
+	}
+	public void setNameAnimal(String nameAnimal) {
+		this.nameAnimal = nameAnimal;
+	}
+	public Boolean getSex() {
+		return sex;
+	}
+	public void setSex(Boolean sex) {
+		this.sex = sex;
+	}
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+	public void setDateOfBirth(Date date) {
+		this.dateOfBirth = date;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getUrlPicture() {
+		return urlPicture;
+	}
+	public void setUrlPicture(String urlPicture) {
+		this.urlPicture = urlPicture;
+	}
+	public Set<AnimalData> getAnimalDatas() {
+		return animalDatas;
+	}
+	public void setAnimalDatas(Set<AnimalData> animalDatas) {
+		this.animalDatas = animalDatas;
+	}
+	public Set<AnimalPicture> getAnimalPictures() {
+		return animalPictures;
+	}
+	public void setAnimalPictures(Set<AnimalPicture> animalPictures) {
+		this.animalPictures = animalPictures;
+	}
 }

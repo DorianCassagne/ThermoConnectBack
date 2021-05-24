@@ -16,13 +16,20 @@ import me.dcal.thermoconnect.repository.SpeciesRepository;
 public class SpeciesService {
 	@Autowired
 	SpeciesRepository speciesRepository;
+	@Autowired
+	Factory factory;
 	
 	public List<BodySpecies> listSpecies(){
 		List<Species> lspe =  speciesRepository.findAll();
 		List<BodySpecies> listBody = new ArrayList<>();
 		for (Species species : lspe) {
-			listBody.add(Factory.factory.toBody(species));
+			listBody.add(factory.toBody(species));
 		}
 		return listBody;
+	}
+	
+	public boolean addSpecies(Species s){
+		speciesRepository.save(s);
+		return true;
 	}
 }
