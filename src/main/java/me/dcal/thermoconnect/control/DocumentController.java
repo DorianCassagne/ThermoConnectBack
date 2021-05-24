@@ -55,15 +55,6 @@ public class DocumentController {
 	@ResponseBody
 	public FileSystemResource connexion(@RequestBody BodyConnexion body,HttpServletRequest request,
 			HttpServletResponse response, Model model) {
-		System.out.println("test file");
-		return fileservice.getExampleFile();
-		
-	}
-	@PostMapping(path = "/file",consumes = "application/json", produces = "application/json")
-	@ResponseBody
-	public FileSystemResource file(@RequestBody BodyConnexion body,HttpServletRequest request,
-			HttpServletResponse response, Model model) {
-		System.out.println("test file");
 		return fileservice.getExampleFile();
 		
 	}
