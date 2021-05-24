@@ -13,6 +13,18 @@ import me.dcal.thermoconnect.id.AnimalPictureId;
 public class AnimalPicture {
 	@EmbeddedId
 	AnimalPictureId animalPictureId;
+	public AnimalPictureId getAnimalPictureId() {
+		return animalPictureId;
+	}
+	public void setAnimalPictureId(AnimalPictureId animalPictureId) {
+		this.animalPictureId = animalPictureId;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
 	@Column(name="url")
 	String url;
 }

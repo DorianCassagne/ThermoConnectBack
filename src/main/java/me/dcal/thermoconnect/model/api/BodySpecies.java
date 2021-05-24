@@ -4,23 +4,23 @@ import me.dcal.thermoconnect.model.Species;
 
 public class BodySpecies {
 
-    public String espece;
+    public String species;
     public String description;
 
     
    
     public BodySpecies(String espece, String description) {
-        this.espece = espece;
+        this.species = espece;
         this.description = description;
     }
    
 
-    public String getEspece() {
-        return espece;
+    public String getSpeciesName() {
+        return species;
     }
 
-    public void setEspece(String espece) {
-        this.espece = espece;
+    public void setSpecies(String espece) {
+        this.species = espece;
     }
 
     public String getDescription() {

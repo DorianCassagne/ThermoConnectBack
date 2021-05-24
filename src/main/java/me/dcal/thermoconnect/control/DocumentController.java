@@ -51,6 +51,14 @@ public class DocumentController {
 	
 	
 	
+	@PostMapping(path = "/getFile",consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public FileSystemResource connexion(@RequestBody BodyConnexion body,HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		return fileservice.getExampleFile();
+		
+	}
+	
 //	@PostMapping(path = "/ajoutAnimal",consumes = {MediaType.APPLICATION_JSON_VALUE,
 //			MediaType.MULTIPART_FORM_DATA_VALUE}, produces = "application/json")
 //	@ResponseBody

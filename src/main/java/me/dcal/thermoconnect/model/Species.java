@@ -17,7 +17,7 @@ public class Species {
 	@Column(name="description")
 	String description;
 
-	@OneToMany( targetEntity=Animal.class, mappedBy="idSpecies" )
+	@OneToMany( targetEntity=Animal.class, mappedBy="species" )
 	private List<Animal> animals = new ArrayList<>();
 
 	

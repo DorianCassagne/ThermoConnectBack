@@ -23,8 +23,8 @@ import me.dcal.thermoconnect.model.api.BodyTerrarium;
 @Entity
 @Table(name="terrarium", schema = "thermoconnect")
 public class Terrarium {
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_terrarium", unique=true)
 	Integer idTerrarium;
 	@Column(name="temperature_min")
@@ -81,14 +81,14 @@ public class Terrarium {
 
 
 
-	public int getIdTerrarium() {
+	public Integer getIdTerrarium() {
 		return idTerrarium;
 	}
 
 
 
 
-	public void setIdTerrarium(int idTerrarium) {
+	public void setIdTerrarium(Integer idTerrarium) {
 		this.idTerrarium = idTerrarium;
 	}
 

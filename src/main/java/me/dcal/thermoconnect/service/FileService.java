@@ -15,6 +15,9 @@ public class FileService {
 
 	public final String fileStoragePath ;
 
+	public FileSystemResource getExampleFile() {
+		return this.getFile("jpeg.png");
+	}
 
 
 	public FileService(FileStorageProperties fileStorageProperties) {
@@ -24,19 +27,43 @@ public class FileService {
 		boolean dirCreated = file.mkdir();
 	}
 
+	public boolean saveAnimalImage(String username,int idAnimal, MultipartFile file,String fileName) {
+		initUserAnimalFolder(username, idAnimal);
+		saveFile(file, animalPath(username, idAnimal)+fileName);
+		return true;
+	}
 
-
-
-	public boolean createDirectory(String path) {
-		File file = new File(path);
+	
+	public boolean saveAnimalDocument(String username,int idAnimal, MultipartFile file,String fileName) {
+		initUserAnimalFolder(username, idAnimal);
+		saveFile(file, animalImagePath(username, idAnimal)+fileName);
+		return true;
+	}
+	
+	private void initUserAnimalFolder(String username, int idAnimal) {
+		createDirectory(userPath(username));
+		createDirectory(animalPath(username,idAnimal));
+		createDirectory(animalImagePath(username,idAnimal));
+	}
+	private String userPath(String username) {
+		return username+"/";
+	}
+	private String animalPath(String username,int idAnimal) {
+		return userPath(username)+idAnimal+"/";
+	}
+	private String animalImagePath(String username,int idAnimal) {
+		return animalPath(username,idAnimal)+"image/";
+	}
+	private boolean createDirectory(String path) {
+		File file = new File(fileStoragePath+"/"+path);
 		return file.mkdir();
 	}
 
-	public FileSystemResource getFile(String filename) {
+	private FileSystemResource getFile(String filename) {
 		return new FileSystemResource(new File(fileStoragePath+"/"+filename));
 	}
 
-	public boolean renameFile( String newfilename,String old,  String filename) {
+	private boolean renameFile( String newfilename,String old,  String filename) {
 
 		try{
 
@@ -51,7 +78,7 @@ public class FileService {
 	}
 
 
-	public String saveFile(MultipartFile file, String filename) {
+	private String saveFile(MultipartFile file, String filename) {
 
 		try{
 			byte barr[]=file.getBytes();
@@ -67,7 +94,7 @@ public class FileService {
 
 	}
 
-	public boolean deleteFile(String filename) {
+	private boolean deleteFile(String filename) {
 		File file = new File(fileStoragePath +"/"+ filename);
 
 		return file.delete();

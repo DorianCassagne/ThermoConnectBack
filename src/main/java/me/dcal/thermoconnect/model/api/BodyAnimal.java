@@ -1,28 +1,40 @@
 package me.dcal.thermoconnect.model.api;
 
-
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BodyAnimal {
 
-	    public BodyConnexion bodyConnexion;
-	    public int idAnimal;
-	    public int terrarium;
+	    public List<String> getDocuments() {
+		return documents;
+	}
+	public void setDocuments(List<String> documents) {
+		this.documents = documents;
+	}
+		public BodyConnexion bodyConnexion;
+	    public Integer idAnimal;
+	    public Integer terrarium;
 	    public String species;
 	    public String name;
-	    public boolean sexe;
-	    public String datenaissance;
-	    public String description;
+	    public Boolean sex;
+	    public String dateOfBirth;
+		public String description;
 	    public String food;
+	    public List<String> documents = new ArrayList<>();
 
 
-	    public BodyAnimal(BodyConnexion bodyConnexion, int terrarium, String species, String name, boolean sexe, String datenaissance, String description,   String food, int idAnimal) {
+	    public BodyAnimal() {
+	    	
+	    }
+	    public BodyAnimal(BodyConnexion bodyConnexion, int terrarium, String species, String name, boolean sex, String dateOfBirth, String description,   String food, int idAnimal) {
 	        this.bodyConnexion = bodyConnexion;
 	        this.idAnimal = idAnimal;
 	        this.terrarium = terrarium;
 	        this.species = species;
 	        this.name = name;
-	        this.sexe = sexe;
-	        this.datenaissance = datenaissance;
+	        this.sex = sex;
+	        this.dateOfBirth = dateOfBirth;
 	        this.description = description;
 	        this.food = food;
 	    }
@@ -69,20 +81,12 @@ public class BodyAnimal {
 	        this.name = name;
 	    }
 
-	    public boolean isSexe() {
-	        return sexe;
+	    public Boolean isSex() {
+	        return sex;
 	    }
 
-	    public void setSexe(boolean sexe) {
-	        this.sexe = sexe;
-	    }
-
-	    public String getDatenaissance() {
-	        return datenaissance;
-	    }
-
-	    public void setDatenaissance(String datenaissance) {
-	        this.datenaissance = datenaissance;
+	    public void setSex(boolean sex) {
+	        this.sex = sex;
 	    }
 
 	    public String getDescription() {
@@ -100,7 +104,12 @@ public class BodyAnimal {
 	    public void setFood(String food) {
 	        this.food = food;
 	    }
-
+	    public String getDateOfBirth() {
+ 			return dateOfBirth;
+ 		}
+ 		public void setDateOfBirth(String dateOfBirth) {
+ 			this.dateOfBirth = dateOfBirth;
+ 		}
 	 
 	  
 
