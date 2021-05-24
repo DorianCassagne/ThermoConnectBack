@@ -15,7 +15,9 @@ public class FileService {
 
 	public final String fileStoragePath ;
 
-
+	public FileSystemResource getExampleFile() {
+		return this.getFile("jpeg.png");
+	}
 
 
 	public FileService(FileStorageProperties fileStorageProperties) {
@@ -50,7 +52,7 @@ public class FileService {
 		return userPath(username)+idAnimal+"/";
 	}
 	private String animalImagePath(String username,int idAnimal) {
-		return animalPath(username,idAnimal)+"/image/";
+		return animalPath(username,idAnimal)+"image/";
 	}
 	private boolean createDirectory(String path) {
 		File file = new File(fileStoragePath+"/"+path);

@@ -16,7 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import me.dcal.thermoconnect.Factory;
 import me.dcal.thermoconnect.model.Animal;
+import me.dcal.thermoconnect.model.Terrarium;
 import me.dcal.thermoconnect.model.api.BodyAnimal;
+import me.dcal.thermoconnect.model.api.BodyTerrarium;
 import me.dcal.thermoconnect.repository.AnimalRepository;
 import me.dcal.thermoconnect.service.AnimalService;
 import me.dcal.thermoconnect.service.ConnexionService;
@@ -40,28 +42,56 @@ public class AnimalController {
 	@PostMapping(path = "/ajoutAnimal",consumes = {MediaType.APPLICATION_JSON_VALUE,
 			MediaType.MULTIPART_FORM_DATA_VALUE}, produces = "application/json")
 	@ResponseBody
-	public Integer addfile(@RequestPart("description")  BodyAnimal body,@RequestPart("files") List<MultipartFile> files
+	public Integer ajoutAnimal(@RequestPart("description")  BodyAnimal body,@RequestPart("files") List<MultipartFile> files
 			,@RequestPart("picture") MultipartFile picture, HttpServletRequest request,
 			HttpServletResponse response, Model model) {
 		
-		
-//		Animal a = new Animal();
-//		a.setIdTerrarium();
-		
-		
 		if(connexionService.validUser(body.bodyConnexion)){
-			//TODO:check if its a user's terrarium
-			animalService.saveAnimal(body, picture, files);
+			if(connexionService.isTerrariumUser(body.bodyConnexion.getLogin(),body.terrarium)) {
+				animalService.saveAnimal(body, picture, files);
+				return 1;
+			}
+			return 0;
 		}
 		return -1;
-//		System.out.println("upload");
-//		System.out.println(body);
-//		System.out.println();
-//		fileservice.saveFile(files.get(0), "abc1.png");
-//		fileservice.saveFile(files.get(1), "abc2.png");
-//		fileservice.saveFile(picture, "pic.png");
-//		return 1;
 	}
+	
+	@PostMapping(path = "/listAnimal",consumes = {MediaType.APPLICATION_JSON_VALUE,
+			MediaType.MULTIPART_FORM_DATA_VALUE}, produces = "application/json")
+	@ResponseBody
+	public List<BodyAnimal> listAnimal(@RequestPart("description")  BodyTerrarium body,@RequestPart("files") List<MultipartFile> files
+			,@RequestPart("picture") MultipartFile picture, HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		
+		if(connexionService.validUser(body.bodyConnexion)){
+			if(connexionService.isTerrariumUser(body.bodyConnexion.getLogin(),body.idTerrarium)) {
+				return animalService.getAnnimalOfTerra(body.idTerrarium);
+			}
+			return null;
+		}
+		return null;
+	}
+	
+//	@PostMapping(path = "/listAnimalDocument",consumes = {MediaType.APPLICATION_JSON_VALUE,
+//			MediaType.MULTIPART_FORM_DATA_VALUE}, produces = "application/json")
+//	@ResponseBody
+//	public List<BodyAnimal> listAnimalDocuemnt(@RequestPart("description")  BodyAnimal body,@RequestPart("files") List<MultipartFile> files
+//			,@RequestPart("picture") MultipartFile picture, HttpServletRequest request,
+//			HttpServletResponse response, Model model) {
+//		
+//		if(connexionService.validUser(body.bodyConnexion)){
+//			
+//			
+////			if(connexionService.isTerrariumUser(body.bodyConnexion.getLogin(),body.idTerrarium)) {
+//////				return animalService.getAnnimalOfTerra(body.idTerrarium);
+////			}
+////			return null;
+//		}
+//		return null;
+//	}
+	
+	
+	
 
 
 }

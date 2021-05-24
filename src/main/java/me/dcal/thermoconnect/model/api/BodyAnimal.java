@@ -1,10 +1,18 @@
 package me.dcal.thermoconnect.model.api;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BodyAnimal {
 
-	    public BodyConnexion bodyConnexion;
+	    public List<String> getDocuments() {
+		return documents;
+	}
+	public void setDocuments(List<String> documents) {
+		this.documents = documents;
+	}
+		public BodyConnexion bodyConnexion;
 	    public Integer idAnimal;
 	    public Integer terrarium;
 	    public String species;
@@ -13,8 +21,12 @@ public class BodyAnimal {
 	    public String dateOfBirth;
 		public String description;
 	    public String food;
+	    public List<String> documents = new ArrayList<>();
 
 
+	    public BodyAnimal() {
+	    	
+	    }
 	    public BodyAnimal(BodyConnexion bodyConnexion, int terrarium, String species, String name, boolean sex, String dateOfBirth, String description,   String food, int idAnimal) {
 	        this.bodyConnexion = bodyConnexion;
 	        this.idAnimal = idAnimal;

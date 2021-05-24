@@ -1,17 +1,19 @@
 package me.dcal.thermoconnect.model.api;
 
 public class BodyConnexion {
-	
-    private String login;
+
+	private String login;
 	public String password;
-	
-	
-  public BodyConnexion(String login, String password) {
-        this.login = login;
-        this.password = password;
-    }
-	
-    public String getLogin() {
+
+
+	public BodyConnexion() {
+	}
+	public BodyConnexion(String login, String password) {
+		this.login = login;
+		this.password = password;
+	}
+
+	public String getLogin() {
 		return login;
 	}
 
@@ -28,5 +30,5 @@ public class BodyConnexion {
 	}
 
 
-  
+
 }

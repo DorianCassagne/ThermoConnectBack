@@ -30,6 +30,9 @@ public class Animal {
 	String description;
 	@Column(name="url_picture")
 	String urlPicture;
+	@Column(name="food")
+	String food;
+	
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "animalDataId.idAnimal")
 	Set<AnimalData> animalDatas;
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "animalPictureId.idAnimal")
@@ -95,5 +98,11 @@ public class Animal {
 	}
 	public void setAnimalPictures(Set<AnimalPicture> animalPictures) {
 		this.animalPictures = animalPictures;
+	}
+	public String getFood() {
+		return food;
+	}
+	public void setFood(String food) {
+		this.food = food;
 	}
 }
