@@ -2,6 +2,7 @@ package me.dcal.thermoconnect;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -61,6 +62,16 @@ public class Factory {
 			return null;
 		return date.toString();
 	}
+	private Timestamp stringToTimeStamp(String time) {
+		try {
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+		    Date parsedDate = (Date) dateFormat.parse(time);
+		    return  new java.sql.Timestamp(parsedDate.getTime());
+		} catch(Exception e) { //this generic but you can control another types of exception
+		    System.out.println("TimeStamp non valide");
+		    return null;
+		}
+	}
 	
 	private Time stringToTime(String time) {
 		return java.sql.Time.valueOf(time);
@@ -76,7 +87,7 @@ public class Factory {
 		TerrariumDataId tdi = new TerrariumDataId();
 		
 		tdi.setIdTerrarium(btd.id);
-//		adi.setDateAnimalData(stringToDate(bad.date)); //TODO: time
+		tdi.setTime(stringToTimeStamp(btd.date)); //TODO: time
 		td.setHumidity(btd.humidity);
 		td.setTemperature(btd.temperature);
 		return td;

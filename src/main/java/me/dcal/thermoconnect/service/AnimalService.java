@@ -47,15 +47,17 @@ public class AnimalService {
 		a.setUrlPicture(fileName);
 		a = animalRepository.save(a);
 		fileService.saveAnimalImage(body.bodyConnexion.getLogin(), a.getIdAnimal(), picture, fileName);
-		for (MultipartFile multipartFile : files) {
-			AnimalPicture ap = new AnimalPicture();
-			AnimalPictureId api = new AnimalPictureId();
-			api.setIdAnimal(a.getIdAnimal());
-			api.setNamePicture(multipartFile.getOriginalFilename());
-			ap.setAnimalPictureId(api);
-			ap.setUrl(multipartFile.getOriginalFilename());
-			animalPictureRepository.save(ap);
-			fileService.saveAnimalDocument(body.bodyConnexion.getLogin(), a.getIdAnimal(), multipartFile, multipartFile.getOriginalFilename());
+		if(files !=null) {
+			for (MultipartFile multipartFile : files) {
+				AnimalPicture ap = new AnimalPicture();
+				AnimalPictureId api = new AnimalPictureId();
+				api.setIdAnimal(a.getIdAnimal());
+				api.setNamePicture(multipartFile.getOriginalFilename());
+				ap.setAnimalPictureId(api);
+				ap.setUrl(multipartFile.getOriginalFilename());
+				animalPictureRepository.save(ap);
+				fileService.saveAnimalDocument(body.bodyConnexion.getLogin(), a.getIdAnimal(), multipartFile, multipartFile.getOriginalFilename());
+			}
 		}
 		
 		return 1;
