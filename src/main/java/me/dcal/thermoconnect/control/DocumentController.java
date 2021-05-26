@@ -59,6 +59,8 @@ public class DocumentController {
 		
 	}
 	
+	
+	
 //	@PostMapping(path = "/ajoutAnimal",consumes = {MediaType.APPLICATION_JSON_VALUE,
 //			MediaType.MULTIPART_FORM_DATA_VALUE}, produces = "application/json")
 //	@ResponseBody

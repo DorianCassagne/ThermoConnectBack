@@ -8,15 +8,21 @@ import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import me.dcal.thermoconnect.id.AnimalDataId;
+import me.dcal.thermoconnect.id.TerrariumDataId;
 import me.dcal.thermoconnect.model.Animal;
 import me.dcal.thermoconnect.model.AnimalData;
 import me.dcal.thermoconnect.model.AnimalPicture;
 import me.dcal.thermoconnect.model.Species;
 import me.dcal.thermoconnect.model.Terrarium;
+import me.dcal.thermoconnect.model.TerrariumData;
 import me.dcal.thermoconnect.model.api.BodyAnimal;
+import me.dcal.thermoconnect.model.api.BodyAnimalData;
 import me.dcal.thermoconnect.model.api.BodyConnexion;
 import me.dcal.thermoconnect.model.api.BodySpecies;
 import me.dcal.thermoconnect.model.api.BodyTerrarium;
+import me.dcal.thermoconnect.model.api.BodyTerrariumData;
+import me.dcal.thermoconnect.repository.AnimalDataRepository;
 import me.dcal.thermoconnect.repository.AnimalRepository;
 import me.dcal.thermoconnect.repository.SpeciesRepository;
 import me.dcal.thermoconnect.repository.TerrariumRepository;
@@ -33,6 +39,8 @@ public class Factory {
 	SpeciesRepository speciesRepository;
 	@Autowired
 	TerrariumRepository terrariumRepository;
+	@Autowired
+	AnimalDataRepository animalDataRepository;
 
 	@Autowired
 	Factory factory;
@@ -47,19 +55,51 @@ public class Factory {
 			System.out.println("Bad date value : "+ date);
 			return null;
 		}
+	}	
+	private String dateToString(Date date) {
+		if(date == null)
+			return null;
+		return date.toString();
 	}
+	
 	private Time stringToTime(String time) {
 		return java.sql.Time.valueOf(time);
+	}
+	private String timeToString(Time time) {
+		if(time == null)
+			return null;
+		return time.toString();
+	}
+	
+	public TerrariumData toEntity(BodyTerrariumData btd) {
+		TerrariumData td = new  TerrariumData();
+		TerrariumDataId tdi = new TerrariumDataId();
+		
+		tdi.setIdTerrarium(btd.id);
+//		adi.setDateAnimalData(stringToDate(bad.date)); //TODO: time
+		td.setHumidity(btd.humidity);
+		td.setTemperature(btd.temperature);
+		return td;
+	}
+	
+	public AnimalData toEntity(BodyAnimalData bad) {
+		AnimalData ad = new  AnimalData();
+		AnimalDataId adi = new AnimalDataId();
+		adi.setIdAnimal(bad.id);
+		adi.setDateAnimalData(stringToDate(bad.date));
+		ad.setAnimalDataId(adi);
+		ad.setWeight(bad.data);
+		return ad;
 	}
 
 	public Animal toEntity(BodyAnimal ba) {
 		Animal a = new Animal(); 
 		a.setDateOfBirth(stringToDate(ba.dateOfBirth));
 		a.setDescription(ba.description);
-		if(speciesRepository.findById(ba.species).isPresent())
-			a.setSpecies(speciesRepository.findById(ba.species).get());
+		if(speciesRepository.findById(ba.species.getSpeciesName()).isPresent())
+			a.setSpecies(speciesRepository.findById(ba.species.getSpeciesName()).get());
 		else {
-			throw new RuntimeException();
+			throw new RuntimeException("specsie non trouvé : " +ba.species);
 		}
 		a.setIdTerrarium(terrariumRepository.findById(ba.terrarium).get());
 		a.setNameAnimal(ba.name);
@@ -71,7 +111,9 @@ public class Factory {
 	public BodyAnimal toEntity(Animal a) {
 		BodyAnimal ba = new BodyAnimal(new BodyConnexion(), 
 				a.getIdTerrarium().getIdTerrarium(),
-				a.getSpecies().getSpeciesName(), a.getNameAnimal(), a.getSex(), a.getDateOfBirth().toString(), a.getDescription(),
+				new BodySpecies(a.getSpecies().getSpeciesName(), a.getSpecies().getDescription()),
+				a.getNameAnimal(), a.getSex(), dateToString(a.getDateOfBirth()),
+				a.getDescription(),
 				a.getFood(), a.getIdAnimal());
 		
 		for(AnimalPicture ad :a.getAnimalPictures()) {
@@ -97,10 +139,8 @@ public class Factory {
 		BodyTerrarium bt = new BodyTerrarium();
 		bt.nameTerrarium=t.getNameTerrarium();
 		bt.sizeTerrarium=t.getSizeTerrarium();
-		if(t.getStartLightTime()!=null)
-			bt.startLightTime=t.getStartLightTime().toString();
-		if(t.getStopLightTime()!=null)
-			bt.stopLightTime=t.getStopLightTime().toString();
+		bt.startLightTime=timeToString(t.getStartLightTime());
+		bt.stopLightTime=timeToString(t.getStopLightTime());
 		bt.temperatureMax=t.getTemperatureMax();
 		bt.temperatureMin=t.getTemperatureMin();
 		bt.idTerrarium=t.getIdTerrarium();

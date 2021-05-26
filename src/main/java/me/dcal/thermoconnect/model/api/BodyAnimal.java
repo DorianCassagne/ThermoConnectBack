@@ -15,19 +15,19 @@ public class BodyAnimal {
 		public BodyConnexion bodyConnexion;
 	    public Integer idAnimal;
 	    public Integer terrarium;
-	    public String species;
+	    public BodySpecies species;
 	    public String name;
 	    public Boolean sex;
 	    public String dateOfBirth;
 		public String description;
 	    public String food;
-	    public List<String> documents = new ArrayList<>();
+	    public List<String> documents = new ArrayList<>(); 
 
 
 	    public BodyAnimal() {
 	    	
 	    }
-	    public BodyAnimal(BodyConnexion bodyConnexion, int terrarium, String species, String name, boolean sex, String dateOfBirth, String description,   String food, int idAnimal) {
+	    public BodyAnimal(BodyConnexion bodyConnexion, Integer terrarium, BodySpecies species, String name, Boolean sex, String dateOfBirth, String description,   String food, Integer idAnimal) {
 	        this.bodyConnexion = bodyConnexion;
 	        this.idAnimal = idAnimal;
 	        this.terrarium = terrarium;
@@ -49,27 +49,27 @@ public class BodyAnimal {
 	    }
 
 
-	    public int getIdAnimal() {
+	    public Integer getIdAnimal() {
 	        return idAnimal;
 	    }
 
-	    public void setIdAnimal(int idAnimal) {
+	    public void setIdAnimal(Integer idAnimal) {
 	        this.idAnimal = idAnimal;
 	    }
 
-	    public int getTerrarium() {
+	    public Integer getTerrarium() {
 	        return terrarium;
 	    }
 
-	    public void setTerrarium(int terrarium) {
+	    public void setTerrarium(Integer terrarium) {
 	        this.terrarium = terrarium;
 	    }
 
-	    public String getSpecies() {
+	    public BodySpecies getSpecies() {
 	        return species;
 	    }
 
-	    public void setSpecies(String species) {
+	    public void setSpecies(BodySpecies species) {
 	        this.species = species;
 	    }
 
@@ -85,7 +85,7 @@ public class BodyAnimal {
 	        return sex;
 	    }
 
-	    public void setSex(boolean sex) {
+	    public void setSex(Boolean sex) {
 	        this.sex = sex;
 	    }
 

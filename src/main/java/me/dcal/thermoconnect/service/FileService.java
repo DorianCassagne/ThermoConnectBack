@@ -4,21 +4,43 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import me.dcal.thermoconnect.model.Animal;
+import me.dcal.thermoconnect.model.api.BodyAnimal;
 import me.dcal.thermoconnect.propertie.FileStorageProperties;
+import me.dcal.thermoconnect.repository.AnimalRepository;
 
 @Service
 public class FileService {
 
-
+	@Autowired
+	AnimalRepository animalRepository;
 	public final String fileStoragePath ;
 
 	public FileSystemResource getExampleFile() {
 		return this.getFile("jpeg.png");
 	}
-
+	public FileSystemResource getAnimalImage(BodyAnimal ba) {
+		Animal a = animalRepository.findById(ba.getIdAnimal()).get();
+//		returna.getUrlPicture();
+		return getFile(animalPath(ba.getBodyConnexion().getLogin(), ba.getIdAnimal())+"/"+a.getUrlPicture());
+		
+	}
+	public FileSystemResource getAnimalDocument(BodyAnimal ba) {
+		Animal a = animalRepository.findById(ba.getIdAnimal()).get();
+//		returna.getUrlPicture();
+		if(ba.getDocuments().size() ==1 )
+			return getFile(animalImagePath(ba.getBodyConnexion().getLogin(), ba.getIdAnimal())+"/"+ba.getDocuments().get(0));
+		return null;
+		
+	}
 
 	public FileService(FileStorageProperties fileStorageProperties) {
 		this.fileStoragePath = Paths.get(fileStorageProperties.getUploadDir()).toString();

@@ -46,10 +46,10 @@ public class Terrarium {
 	@ManyToOne
 	@JoinColumn(name = "username")
 	User username; 
-	@OneToMany( targetEntity=Animal.class, mappedBy="idTerrarium" )
-	private List<Animal> animals = new ArrayList<>();
+	@OneToMany(cascade = CascadeType.ALL, targetEntity=Animal.class, mappedBy="idTerrarium" )
+	List<Animal> animals = new ArrayList<>();
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "terrariumDataId.idTerrarium")
-	Set<TerrariumData> terrariumDatas;
+	List<TerrariumData> terrariumDatas = new ArrayList<>();;
 
 
 //	public Terrarium(BodyTerrarium bt) {

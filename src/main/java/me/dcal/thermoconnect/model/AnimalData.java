@@ -19,4 +19,18 @@ public class AnimalData {
 	@Column(name="weight")
 	Double weight;
 	
+
+	public AnimalDataId getAnimalDataId() {
+		return animalDataId;
+	}
+	public void setAnimalDataId(AnimalDataId animalDataId) {
+		this.animalDataId = animalDataId;
+	}
+	public Double getWeight() {
+		return weight;
+	}
+	public void setWeight(Double weight) {
+		this.weight = weight;
+	}
+	
 }
