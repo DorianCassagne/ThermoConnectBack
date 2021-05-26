@@ -1,6 +1,7 @@
 package me.dcal.thermoconnect.model;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -39,16 +40,16 @@ public class TerrariumData {
 		this.terrariumDataId = terrariumDataId;
 	}
 	
-	public Terrarium getIdTerrarium() {
+	public Integer getIdTerrarium() {
 		return terrariumDataId.getIdTerrarium();
 	}
-	public void setIdTerrarium(Terrarium idTerrarium) {
+	public void setIdTerrarium(Integer idTerrarium) {
 		this.terrariumDataId.setIdTerrarium(idTerrarium);
 	}
-	public Time getTime() {
+	public Timestamp getTime() {
 		return terrariumDataId.getTime();
 	}
-	public void setTime(Time time) {
+	public void setTime(Timestamp time) {
 		this.terrariumDataId.setTime(time);
 	}
 	public double getTemperature() {

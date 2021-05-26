@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import me.dcal.thermoconnect.model.api.BodyAnimalData;
 import me.dcal.thermoconnect.model.api.BodyConnexion;
 import me.dcal.thermoconnect.model.api.BodyTerrarium;
+import me.dcal.thermoconnect.model.api.BodyTerrariumData;
 import me.dcal.thermoconnect.service.ConnexionService;
 import me.dcal.thermoconnect.service.TerrariumService;
 @RestController
@@ -25,19 +27,20 @@ public class TerrariumController {
 	
 	@PostMapping(path = "/ajoutTerrarium",consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public Integer check(@RequestBody BodyTerrarium bodyTerra,HttpServletRequest request,
+	public Integer ajoutTerrarium(@RequestBody BodyTerrarium bodyTerra,HttpServletRequest request,
 			HttpServletResponse response, Model model) {
 		
 		if(connexionService.validUser(bodyTerra.bodyConnexion)){
-			terrariumService.addTerrarium(bodyTerra);
-			return 1;
+			if(terrariumService.addTerrarium(bodyTerra))
+				return 1;
+			return 0;
 		}
-		return 0;
-
+		return -1;
 	}
+	
 	@PostMapping(path = "/listTerrarium",consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public List<BodyTerrarium> check(@RequestBody BodyConnexion bc,HttpServletRequest request,
+	public List<BodyTerrarium> listTerrarium(@RequestBody BodyConnexion bc,HttpServletRequest request,
 			HttpServletResponse response, Model model) {
 		
 		if(connexionService.validUser(bc)){
@@ -46,4 +49,35 @@ public class TerrariumController {
 		return null;
 
 	}
+	@PostMapping(path = "/deleteTerrarium",consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public int deleteTerrarium(@RequestBody BodyTerrarium bt,HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		
+		if(connexionService.validUser(bt.bodyConnexion)){
+			if(connexionService.isTerrariumUser(bt.bodyConnexion.getLogin(), bt.idTerrarium)) {
+				terrariumService.deleteTerra(bt);
+				return 1;
+			}
+			return 0;
+		}
+		return -1;
+
+	}
+	
+	@PostMapping(path = "/addTerrariumData",consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public Integer addTerrariumDocument(@RequestBody BodyTerrariumData body,HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		if(connexionService.validUser(body.bodyConnexion)){
+			if(connexionService.isTerrariumUser(body.bodyConnexion.getLogin(),body.id)) {
+				terrariumService.addDataTerrarium(body);
+				return 1;
+			}
+			return 0;
+		}
+		return -1;
+	}
+	
+	
 }
