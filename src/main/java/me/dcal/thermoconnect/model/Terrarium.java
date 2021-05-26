@@ -81,6 +81,20 @@ public class Terrarium {
 
 
 
+	public List<TerrariumData> getTerrariumDatas() {
+		return terrariumDatas;
+	}
+
+
+
+
+	public void setTerrariumDatas(List<TerrariumData> terrariumDatas) {
+		this.terrariumDatas = terrariumDatas;
+	}
+
+
+
+
 	public Integer getIdTerrarium() {
 		return idTerrarium;
 	}

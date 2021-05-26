@@ -67,7 +67,7 @@ public class Factory {
 		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
 		    Date parsedDate = (Date) dateFormat.parse(time);
 		    return  new java.sql.Timestamp(parsedDate.getTime());
-		} catch(Exception e) { //this generic but you can control another types of exception
+		} catch(Exception e) { 
 		    System.out.println("TimeStamp non valide");
 		    return null;
 		}
@@ -77,6 +77,11 @@ public class Factory {
 		return java.sql.Time.valueOf(time);
 	}
 	private String timeToString(Time time) {
+		if(time == null)
+			return null;
+		return time.toString();
+	}	
+	private String timestampToString(Timestamp time) {
 		if(time == null)
 			return null;
 		return time.toString();
@@ -102,7 +107,14 @@ public class Factory {
 		ad.setWeight(bad.data);
 		return ad;
 	}
-
+	public BodyAnimalData toBody(AnimalData ad) {
+		BodyAnimalData ba = new BodyAnimalData();
+		ba.data = ad.getWeight();
+		ba.date = dateToString(ad.getAnimalDataId().getDateAnimalData());
+		ba.id = ad.getAnimalDataId().getIdAnimal();
+		return ba;
+		
+	}
 	public Animal toEntity(BodyAnimal ba) {
 		Animal a = new Animal(); 
 		a.setDateOfBirth(stringToDate(ba.dateOfBirth));
@@ -160,6 +172,8 @@ public class Factory {
 	}
 	public Terrarium toEntity(BodyTerrarium bt) {
 		Terrarium t = new Terrarium();
+		if(bt.idTerrarium != null && bt.idTerrarium!= 0)
+			t.setIdTerrarium(bt.idTerrarium);
 		t.setUsername(userRepository.getOne(bt.bodyConnexion.getLogin()));
 		t.setNameTerrarium(bt.nameTerrarium);
 		t.setSizeTerrarium(bt.sizeTerrarium);
@@ -173,6 +187,17 @@ public class Factory {
 
 		return t;
 	}
+
+	public BodyTerrariumData toBody(TerrariumData td) {
+		BodyTerrariumData btd = new BodyTerrariumData();
+		btd.date = timestampToString(td.getTime());
+		btd.humidity = td.getHumidity();
+		btd.temperature = td.getTemperature();
+		btd.id = td.getIdTerrarium();
+		return btd;
+	}
+
+	
 
 
 

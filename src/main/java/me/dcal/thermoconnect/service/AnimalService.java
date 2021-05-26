@@ -1,7 +1,9 @@
 package me.dcal.thermoconnect.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,10 +45,12 @@ public class AnimalService {
 	
 	public Integer saveAnimal(BodyAnimal body, MultipartFile picture,List<MultipartFile> files) {
 		Animal a = factory.toEntity(body);
-		String fileName = picture.getOriginalFilename();
-		a.setUrlPicture(fileName);
+		if(picture != null) {
+			String fileName = picture.getOriginalFilename();
+			a.setUrlPicture(fileName);
+			fileService.saveAnimalImage(body.bodyConnexion.getLogin(), a.getIdAnimal(), picture, fileName);
+		}
 		a = animalRepository.save(a);
-		fileService.saveAnimalImage(body.bodyConnexion.getLogin(), a.getIdAnimal(), picture, fileName);
 		if(files !=null) {
 			for (MultipartFile multipartFile : files) {
 				AnimalPicture ap = new AnimalPicture();
@@ -86,6 +90,29 @@ public class AnimalService {
 			lba.add(factory.toEntity(animal));
 		}
 		return lba;
+	}
+	
+	public List<BodyAnimalData> getAllData (BodyAnimal ba){
+		Animal a = animalRepository.findById(ba.getIdAnimal()).get();
+		List<BodyAnimalData> bads = new ArrayList();
+		for(AnimalData ad : a.getAnimalDatas()) {
+			bads.add(factory.toBody(ad));
+		}
+		return bads;
+	}
+	
+	public int deleteDocument(BodyAnimal ba) {
+		Animal a = animalRepository.findById(ba.getIdAnimal()).get();
+		int count = 0;
+		Set<AnimalPicture> ap =  a.getAnimalPictures();
+		for (AnimalPicture animalPicture : ap) {
+			if(ba.documents.contains(animalPicture.getAnimalPictureId().getNamePicture())) {
+				animalPictureRepository.delete(animalPicture);
+				count++;
+			}
+		}
+		return count;
+		
 	}
 	
 //	public BodyAnimal getAnimal(int idAnimal) {

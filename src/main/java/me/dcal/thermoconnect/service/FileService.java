@@ -8,6 +8,7 @@ import java.io.RandomAccessFile;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,19 @@ public class FileService {
 	}
 	public FileSystemResource getAnimalImage(BodyAnimal ba) {
 		Animal a = animalRepository.findById(ba.getIdAnimal()).get();
-//		returna.getUrlPicture();
+		if(a.getUrlPicture() == null) {
+			return null;
+		}
 		return getFile(animalPath(ba.getBodyConnexion().getLogin(), ba.getIdAnimal())+"/"+a.getUrlPicture());
 		
+	}
+	
+	public boolean deleteAnimal(BodyAnimal ba) {
+		Optional<Animal> oa =  animalRepository.findById(ba.getIdAnimal());
+		if(oa.isEmpty())
+			return false;
+		animalRepository.delete(oa.get());
+		return true;
 	}
 	
 	public HttpEntity<byte[]> getStaticImage() throws IOException {
