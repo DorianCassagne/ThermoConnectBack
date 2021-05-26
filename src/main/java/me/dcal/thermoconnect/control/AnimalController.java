@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.aspectj.apache.bcel.classfile.Module.Require;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
@@ -48,20 +49,16 @@ public class AnimalController {
 	@PostMapping(path = "/ajoutAnimal",consumes = {MediaType.APPLICATION_JSON_VALUE,
 			MediaType.MULTIPART_FORM_DATA_VALUE}, produces = "application/json")
 	@ResponseBody
-	public Integer ajoutAnimal(@RequestPart("description")  BodyAnimal body,@RequestPart("files") List<MultipartFile> files
-			,@RequestPart("picture") MultipartFile picture, HttpServletRequest request,
+	public Integer ajoutAnimal(@RequestPart("description")  BodyAnimal body,@RequestPart(name = "files", required = false) List<MultipartFile> files
+			,@RequestPart(name = "picture",required = false) MultipartFile picture, HttpServletRequest request,
 			HttpServletResponse response, Model model) {
-		System.out.println("entré");
 		if(connexionService.validUser(body.bodyConnexion)){
 			if(connexionService.isTerrariumUser(body.bodyConnexion.getLogin(),body.terrarium)) {
 				animalService.saveAnimal(body, picture, files);
-				System.out.println("passe");
 				return 1;
 			}
-			System.out.println("passe pas");
 			return 0;
 		}
-		System.out.println("passe pas");
 		return -1;
 	}
 	@PostMapping(path = "/ajoutDocument",consumes = {MediaType.APPLICATION_JSON_VALUE,

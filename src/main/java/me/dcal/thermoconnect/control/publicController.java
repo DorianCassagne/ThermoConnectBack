@@ -39,15 +39,6 @@ public class publicController {
 	@RequestMapping("/pic")
 	@ResponseBody
 	public HttpEntity<byte[]> getArticleImage() throws IOException {
-
-		int randomNum = ThreadLocalRandom.current().nextInt(1, 4+ 1);
-	    RandomAccessFile f = new RandomAccessFile("/tmp/thermo/"+randomNum+".jpg", "r");
-	    byte[] b = new byte[(int)f.length()];
-	    f.readFully(b);
-	    HttpHeaders headers = new HttpHeaders();
-	    headers.setContentType(MediaType.IMAGE_JPEG);
-	    headers.setContentLength(b.length);
-
-	    return new HttpEntity<byte[]>(b, headers);
+	    return fileService.getStaticImage();
 	}
 }
