@@ -42,6 +42,11 @@ public class TerrariumService {
 		terrariumRepository.save(t);
 		return true;
 	}
+	public boolean modifTerrarium(BodyTerrarium bt) {
+		Terrarium t = factory.toEntity(bt);
+		terrariumRepository.save(t);
+		return true;
+	}
 	
 	public List<BodyTerrarium> getAllTerrarium(BodyConnexion bc){
 		List<Terrarium> ts = terrariumRepository.findAllByUsername(userRepository.findById(bc.getLogin()));
@@ -57,5 +62,15 @@ public class TerrariumService {
 		Terrarium t = terrariumRepository.findById(bt.idTerrarium).get();
 		terrariumRepository.delete(t);
 		return true;
+	}
+	
+	public List<BodyTerrariumData> getAllData(BodyTerrarium bt){
+		Terrarium t = terrariumRepository.findById(bt.idTerrarium).get();
+		List<BodyTerrariumData> btds = new ArrayList();
+		for(TerrariumData td : t.getTerrariumDatas()) {
+			btds.add(factory.toBody(td));
+		}
+		return btds;
+		
 	}
 }

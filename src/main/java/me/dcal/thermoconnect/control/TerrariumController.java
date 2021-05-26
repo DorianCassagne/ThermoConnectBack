@@ -38,6 +38,20 @@ public class TerrariumController {
 		return -1;
 	}
 	
+	@PostMapping(path = "/modifTerrarium",consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public Integer modifTerrarium(@RequestBody BodyTerrarium bodyTerra,HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		if(connexionService.validUser(bodyTerra.bodyConnexion)){
+			if(terrariumService.modifTerrarium(bodyTerra))
+				return 1;
+			return 0;
+		}
+		return -1;
+	}
+	
+	
+	
 	@PostMapping(path = "/listTerrarium",consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public List<BodyTerrarium> listTerrarium(@RequestBody BodyConnexion bc,HttpServletRequest request,
@@ -67,7 +81,7 @@ public class TerrariumController {
 	
 	@PostMapping(path = "/addTerrariumData",consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public Integer addTerrariumDocument(@RequestBody BodyTerrariumData body,HttpServletRequest request,
+	public Integer addTerrariumdata(@RequestBody BodyTerrariumData body,HttpServletRequest request,
 			HttpServletResponse response, Model model) {
 		if(connexionService.validUser(body.bodyConnexion)){
 			if(connexionService.isTerrariumUser(body.bodyConnexion.getLogin(),body.id)) {
@@ -78,6 +92,19 @@ public class TerrariumController {
 		}
 		return -1;
 	}
+	
+	@PostMapping(path = "/getTerrariumData",consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public List<BodyTerrariumData> getTerrariumdata(@RequestBody BodyTerrarium body,HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		if(connexionService.validUser(body.bodyConnexion)){
+			if(connexionService.isTerrariumUser(body.bodyConnexion.getLogin(),body.idTerrarium)) {
+				return terrariumService.getAllData(body);
+			}
+		}
+		return null;
+	}
+
 	
 	
 }

@@ -44,8 +44,13 @@ public class ConnexionService {
 		}
 	}
 	public boolean isTerrariumUser(String userName,Integer idTerrarium) {
+		try {
 		Terrarium t = terrariumRepository.findById(idTerrarium).get();
 		return t.getUsername().getUsername().equals(userName);
+		}catch (Exception e) {
+			System.out.println("terrarium inexistant: "+ idTerrarium);
+			return false;
+		}
 	}
 	
 	public boolean isAnimalUser(String userName,Integer idAnimal) {

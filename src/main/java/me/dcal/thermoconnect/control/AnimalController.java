@@ -1,12 +1,11 @@
 package me.dcal.thermoconnect.control;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.aspectj.apache.bcel.classfile.Module.Require;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
@@ -18,14 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import me.dcal.thermoconnect.Factory;
-import me.dcal.thermoconnect.model.Animal;
-import me.dcal.thermoconnect.model.Terrarium;
 import me.dcal.thermoconnect.model.api.BodyAnimal;
 import me.dcal.thermoconnect.model.api.BodyAnimalData;
-import me.dcal.thermoconnect.model.api.BodyConnexion;
 import me.dcal.thermoconnect.model.api.BodyTerrarium;
-import me.dcal.thermoconnect.repository.AnimalRepository;
 import me.dcal.thermoconnect.service.AnimalService;
 import me.dcal.thermoconnect.service.ConnexionService;
 import me.dcal.thermoconnect.service.FileService;
@@ -40,12 +34,8 @@ public class AnimalController {
 	AnimalService animalService;
 	
 	
-//	@Autowired
-//	AnimalRepository animalRepository;
-//	@Autowired
-//	AnimalRepository animalRepository;
+
 	
-	//TODO:verifier animal et non terra
 	@PostMapping(path = "/ajoutAnimal",consumes = {MediaType.APPLICATION_JSON_VALUE,
 			MediaType.MULTIPART_FORM_DATA_VALUE}, produces = "application/json")
 	@ResponseBody
@@ -61,6 +51,20 @@ public class AnimalController {
 		}
 		return -1;
 	}
+	
+	@PostMapping(path = "/deleteAnimal",consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public Integer deleteAnimal(@RequestBody BodyAnimal body,HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		if(connexionService.validUser(body.bodyConnexion)){
+			if(connexionService.isAnimalUser(body.bodyConnexion.getLogin(),body.idAnimal)) {
+				return (fileService.deleteAnimal(body))?1:0;
+			}
+			return 0;
+		}
+		return -1;
+		
+	}
 	@PostMapping(path = "/ajoutDocument",consumes = {MediaType.APPLICATION_JSON_VALUE,
 			MediaType.MULTIPART_FORM_DATA_VALUE}, produces = "application/json")
 	@ResponseBody
@@ -72,6 +76,21 @@ public class AnimalController {
 			if(connexionService.isTerrariumUser(body.bodyConnexion.getLogin(),body.terrarium)) {
 				animalService.saveDocument(body, files);
 				return 1;
+			}
+			return 0;
+		}
+		return -1;
+	}
+	
+	@PostMapping(path = "/deleteDocument",consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = "application/json")
+	@ResponseBody
+	public Integer deleteDocument(@RequestBody  BodyAnimal body,
+			HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		
+		if(connexionService.validUser(body.bodyConnexion)){
+			if(connexionService.isAnimalUser(body.bodyConnexion.getLogin(), body.getIdAnimal())) {
+				return animalService.deleteDocument(body);
 			}
 			return 0;
 		}
@@ -119,7 +138,7 @@ public class AnimalController {
 	}
 	@PostMapping(path = "/addAnimalData",consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public Integer getAnimalDocument(@RequestBody BodyAnimalData body,HttpServletRequest request,
+	public int getAnimalData(@RequestBody BodyAnimalData body,HttpServletRequest request,
 			HttpServletResponse response, Model model) {
 		if(connexionService.validUser(body.bodyConnexion)){
 			if(connexionService.isAnimalUser(body.bodyConnexion.getLogin(),body.id)) {
@@ -130,25 +149,19 @@ public class AnimalController {
 		}
 		return -1;
 	}
+	@PostMapping(path = "/getAllAnimalData",consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public Set<BodyAnimalData> getAllAnimalData(@RequestBody BodyAnimal body,HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		if(connexionService.validUser(body.bodyConnexion)){
+			if(connexionService.isAnimalUser(body.bodyConnexion.getLogin(),body.idAnimal)) {
+				animalService.getAllData(body);
+			}
+		}
+		return null;
+	}
 	
-//	@PostMapping(path = "/listAnimalDocument",consumes = {MediaType.APPLICATION_JSON_VALUE,
-//			MediaType.MULTIPART_FORM_DATA_VALUE}, produces = "application/json")
-//	@ResponseBody
-//	public List<BodyAnimal> listAnimalDocuemnt(@RequestPart("description")  BodyAnimal body,@RequestPart("files") List<MultipartFile> files
-//			,@RequestPart("picture") MultipartFile picture, HttpServletRequest request,
-//			HttpServletResponse response, Model model) {
-//		
-//		if(connexionService.validUser(body.bodyConnexion)){
-//			
-//			
-////			if(connexionService.isTerrariumUser(body.bodyConnexion.getLogin(),body.idTerrarium)) {
-//////				return animalService.getAnnimalOfTerra(body.idTerrarium);
-////			}
-////			return null;
-//		}
-//		return null;
-//	}
-	
+
 	
 	
 
