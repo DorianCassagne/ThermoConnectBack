@@ -3,8 +3,6 @@ package me.dcal.thermoconnect.model;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,9 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import me.dcal.thermoconnect.model.api.BodySpecies;
-import me.dcal.thermoconnect.model.api.BodyTerrarium;
 
 
 @Entity

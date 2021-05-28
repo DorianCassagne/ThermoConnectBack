@@ -1,8 +1,6 @@
 package me.dcal.thermoconnect.model.api;
 
-import java.sql.Time;
 
-import me.dcal.thermoconnect.model.Terrarium;
 
 public class BodyTerrarium {
 	public BodyConnexion bodyConnexion;

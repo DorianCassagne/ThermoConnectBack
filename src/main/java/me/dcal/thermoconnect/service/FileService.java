@@ -6,11 +6,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.apache.tomcat.jni.Directory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
@@ -31,6 +31,7 @@ public class FileService {
 	AnimalRepository animalRepository;
 	public final String fileStoragePath ;
 	public final String fileStaticStoragePath ;
+	Random rand = new Random();
 
 	public FileSystemResource getExampleFile() {
 		return this.getFile("jpeg.png");
@@ -46,27 +47,26 @@ public class FileService {
 	
 	public boolean deleteAnimal(BodyAnimal ba) {
 		Optional<Animal> oa =  animalRepository.findById(ba.getIdAnimal());
-		if(oa.isEmpty())
+		if(!oa.isPresent())
 			return false;
 		animalRepository.delete(oa.get());
 		return true;
 	}
 	
 	public HttpEntity<byte[]> getStaticImage() throws IOException {
-
-		int randomNum = ThreadLocalRandom.current().nextInt(1, 2+ 1);
-	    RandomAccessFile f = new RandomAccessFile(fileStaticStoragePath+"/"+randomNum+".jpg", "r");
+		File d = new File(fileStaticStoragePath+"/");
+		File[] files = d.listFiles();
+	    RandomAccessFile f = new RandomAccessFile(files[rand.nextInt(files.length)], "r");
 	    byte[] b = new byte[(int)f.length()];
 	    f.readFully(b);
 	    HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.IMAGE_JPEG);
 	    headers.setContentLength(b.length);
+	    f.close();
 
 	    return new HttpEntity<byte[]>(b, headers);
 	}
 	public FileSystemResource getAnimalDocument(BodyAnimal ba) {
-		Animal a = animalRepository.findById(ba.getIdAnimal()).get();
-//		returna.getUrlPicture();
 		if(ba.getDocuments().size() ==1 )
 			return getFile(animalImagePath(ba.getBodyConnexion().getLogin(), ba.getIdAnimal())+"/"+ba.getDocuments().get(0));
 		return null;
@@ -77,7 +77,7 @@ public class FileService {
 		this.fileStoragePath = Paths.get(fileStorageProperties.getUploadDir()).toString();
 		this.fileStaticStoragePath = Paths.get(fileStorageProperties.getStaticDir()).toString();
 		File file = new File(fileStoragePath);
-		boolean dirCreated = file.mkdir();
+		file.mkdir();
 	}
 
 	public boolean saveAnimalImage(String username,int idAnimal, MultipartFile file,String fileName) {
@@ -116,6 +116,7 @@ public class FileService {
 		return new FileSystemResource(new File(fileStoragePath+"/"+filename));
 	}
 
+	@SuppressWarnings("unused")
 	private boolean renameFile( String newfilename,String old,  String filename) {
 
 		try{
@@ -147,6 +148,7 @@ public class FileService {
 
 	}
 
+	@SuppressWarnings("unused")
 	private boolean deleteFile(String filename) {
 		File file = new File(fileStoragePath +"/"+ filename);
 

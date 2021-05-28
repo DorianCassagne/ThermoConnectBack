@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import me.dcal.thermoconnect.model.api.BodyAnimalData;
 import me.dcal.thermoconnect.model.api.BodyConnexion;
 import me.dcal.thermoconnect.model.api.BodyTerrarium;
 import me.dcal.thermoconnect.model.api.BodyTerrariumData;

@@ -5,7 +5,6 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import me.dcal.thermoconnect.id.AnimalDataId;
 import me.dcal.thermoconnect.id.AnimalPictureId;
 
 @Entity

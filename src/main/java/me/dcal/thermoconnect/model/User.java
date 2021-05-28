@@ -21,7 +21,7 @@ public class User {
 	public User(String username, String password) {
 		this.username=username;
 		this.password=password;
-		mesTerrariums = new HashSet();
+		mesTerrariums = new HashSet<Terrarium>();
 	}
 	public String getUsername() {
 		return username;

@@ -1,6 +1,5 @@
 package me.dcal.thermoconnect.service;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +10,6 @@ import me.dcal.thermoconnect.Factory;
 import me.dcal.thermoconnect.model.Terrarium;
 import me.dcal.thermoconnect.model.TerrariumData;
 import me.dcal.thermoconnect.model.api.BodyConnexion;
-import me.dcal.thermoconnect.model.api.BodySpecies;
 import me.dcal.thermoconnect.model.api.BodyTerrarium;
 import me.dcal.thermoconnect.model.api.BodyTerrariumData;
 import me.dcal.thermoconnect.repository.TerrariumDataRepository;
@@ -66,7 +64,7 @@ public class TerrariumService {
 	
 	public List<BodyTerrariumData> getAllData(BodyTerrarium bt){
 		Terrarium t = terrariumRepository.findById(bt.idTerrarium).get();
-		List<BodyTerrariumData> btds = new ArrayList();
+		List<BodyTerrariumData> btds = new ArrayList<BodyTerrariumData>();
 		for(TerrariumData td : t.getTerrariumDatas()) {
 			btds.add(factory.toBody(td));
 		}
