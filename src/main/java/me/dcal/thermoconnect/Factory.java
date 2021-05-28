@@ -51,9 +51,11 @@ public class Factory {
 
 	private Date stringToDate(String date) {
 		try {
-			return new Date( new SimpleDateFormat("dd/MM/yyyy").parse(date).getTime());
+//			return new Date( new SimpleDateFormat("dd/MM/yyyy").parse(date).getTime());
+			return new Date( new SimpleDateFormat("yyyy-MM-dd").parse(date).getTime());
+			
 		} catch (Exception e) {
-			System.out.println("Bad date value : "+ date);
+			System.out.println("Date not valid expected: yyyy-MM-dd   actual :"+ date);
 			return null;
 		}
 	}	
@@ -68,13 +70,13 @@ public class Factory {
 		    Date parsedDate = (Date) dateFormat.parse(time);
 		    return  new java.sql.Timestamp(parsedDate.getTime());
 		} catch(Exception e) { 
-		    System.out.println("TimeStamp non valide");
+		    System.out.println("Timestamp not valid expected: yyyy-MM-dd hh:mm:ss   actual :");
 		    return null;
 		}
 	}
 	
 	private Time stringToTime(String time) {
-		return java.sql.Time.valueOf(time);
+		return Time.valueOf(time);
 	}
 	private String timeToString(Time time) {
 		if(time == null)
