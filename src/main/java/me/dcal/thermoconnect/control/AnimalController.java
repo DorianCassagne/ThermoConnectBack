@@ -152,11 +152,11 @@ public class AnimalController {
 	}
 	@PostMapping(path = "/getAllAnimalData",consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public Set<BodyAnimalData> getAllAnimalData(@RequestBody BodyAnimal body,HttpServletRequest request,
+	public List<BodyAnimalData> getAllAnimalData(@RequestBody BodyAnimal body,HttpServletRequest request,
 			HttpServletResponse response, Model model) {
 		if(connexionService.validUser(body.bodyConnexion)){
 			if(connexionService.isAnimalUser(body.bodyConnexion.getLogin(),body.idAnimal)) {
-				animalService.getAllData(body);
+				return animalService.getAllData(body);
 			}
 		}
 		return null;
