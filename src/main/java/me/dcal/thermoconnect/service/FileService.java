@@ -53,6 +53,7 @@ public class FileService {
 	public HttpEntity<byte[]> getStaticImage() throws IOException {
 		File d = new File(fileStaticStoragePath+"/");
 		System.out.println(d);
+		System.out.println(d.getAbsolutePath());
 		File[] files = d.listFiles();
 		System.out.println("nb de of picture"  + files.length);
 	    RandomAccessFile f = new RandomAccessFile(files[rand.nextInt(files.length)], "r");
