@@ -19,4 +19,6 @@ public interface AnimalDataRepository  extends JpaRepository<AnimalData,AnimalDa
 //	List<AnimalData> findAllBy(int idAnimal);
 	
 //	List<AnimalData> findAllByIdAnimal(Optional<Integer> idAnimal);
+	@Query(value = "select * from thermoconnect.animal_data where id_animal = ?1 order by date_animal_data desc limit 1",nativeQuery = true)
+	AnimalData findFirst1FilterByIdAnimalOrderByDate(Integer integer);
 }

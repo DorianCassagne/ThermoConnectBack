@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -84,7 +85,7 @@ public class TerrariumController {
 	public Integer addTerrariumdata(@RequestBody BodyTerrariumData body,HttpServletRequest request,
 			HttpServletResponse response, Model model) {
 		if(connexionService.validUser(body.bodyConnexion)){
-			if(connexionService.isTerrariumUser(body.bodyConnexion.getLogin(),body.id)) {
+			if(connexionService.isTerrariumUser(body.bodyConnexion.getLogin(),body.idTerrarium)) {
 				terrariumService.addDataTerrarium(body);
 				return 1;
 			}
@@ -93,9 +94,9 @@ public class TerrariumController {
 		return -1;
 	}
 	
-	@PostMapping(path = "/getTerrariumData",consumes = "application/json", produces = "application/json")
+	@PostMapping(path = "/getAllTerrariumData",consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public List<BodyTerrariumData> getTerrariumdata(@RequestBody BodyTerrarium body,HttpServletRequest request,
+	public List<BodyTerrariumData> getAllTerrariumdata(@RequestBody BodyTerrarium body,HttpServletRequest request,
 			HttpServletResponse response, Model model) {
 		if(connexionService.validUser(body.bodyConnexion)){
 			if(connexionService.isTerrariumUser(body.bodyConnexion.getLogin(),body.idTerrarium)) {
@@ -103,6 +104,25 @@ public class TerrariumController {
 			}
 		}
 		return null;
+	}
+	@PostMapping(path = "/getLastTerrariumData",consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public BodyTerrariumData getLastTerrariumdata(@RequestBody BodyTerrarium body,HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		if(connexionService.validUser(body.bodyConnexion)){
+			if(connexionService.isTerrariumUser(body.bodyConnexion.getLogin(),body.idTerrarium)) {
+				return terrariumService.getLastData(body);
+			}
+		}
+		return null;
+	}
+	@GetMapping(path = "/getLastTest")
+	@ResponseBody
+	public BodyTerrariumData getLastTest(HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		BodyTerrarium bt = new BodyTerrarium();
+		bt.idTerrarium = 2;
+		return terrariumService.getLastData(bt);
 	}
 
 	

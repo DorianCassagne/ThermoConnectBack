@@ -64,7 +64,7 @@ public class Factory {
 	}
 	private Timestamp stringToTimeStamp(String time) {
 		try {
-		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		    Date parsedDate = (Date) dateFormat.parse(time);
 		    return  new java.sql.Timestamp(parsedDate.getTime());
 		} catch(Exception e) { 
@@ -91,7 +91,7 @@ public class Factory {
 		TerrariumData td = new  TerrariumData();
 		TerrariumDataId tdi = new TerrariumDataId();
 		
-		tdi.setIdTerrarium(btd.id);
+		tdi.setIdTerrarium(btd.idTerrarium);
 		tdi.setTime(stringToTimeStamp(btd.date)); //TODO: time
 		td.setHumidity(btd.humidity);
 		td.setTemperature(btd.temperature);
@@ -101,17 +101,17 @@ public class Factory {
 	public AnimalData toEntity(BodyAnimalData bad) {
 		AnimalData ad = new  AnimalData();
 		AnimalDataId adi = new AnimalDataId();
-		adi.setIdAnimal(bad.id);
-		adi.setDateAnimalData(stringToDate(bad.date));
+		adi.setIdAnimal(bad.idAnimal);
+		adi.setDateAnimalData(stringToDate(bad.dateAnimalData));
 		ad.setAnimalDataId(adi);
-		ad.setWeight(bad.data);
+		ad.setWeight(bad.weight);
 		return ad;
 	}
 	public BodyAnimalData toBody(AnimalData ad) {
 		BodyAnimalData ba = new BodyAnimalData();
-		ba.data = ad.getWeight();
-		ba.date = dateToString(ad.getAnimalDataId().getDateAnimalData());
-		ba.id = ad.getAnimalDataId().getIdAnimal();
+		ba.weight = ad.getWeight();
+		ba.dateAnimalData = dateToString(ad.getAnimalDataId().getDateAnimalData());
+		ba.idAnimal = ad.getAnimalDataId().getIdAnimal();
 		return ba;
 		
 	}
@@ -134,7 +134,7 @@ public class Factory {
 	public BodyAnimal toEntity(Animal a) {
 		BodyAnimal ba = new BodyAnimal(new BodyConnexion(), 
 				a.getIdTerrarium().getIdTerrarium(),
-				new BodySpecies(a.getSpecies().getSpeciesName(), a.getSpecies().getDescription()),
+				toBody(speciesRepository.findById(a.getSpecies().getSpeciesName()).get()),
 				a.getNameAnimal(), a.getSex(), dateToString(a.getDateOfBirth()),
 				a.getDescription(),
 				a.getFood(), a.getIdAnimal());
@@ -149,12 +149,15 @@ public class Factory {
 	}
 
 	public BodySpecies toBody(Species s) {
-		return new BodySpecies(s.getSpeciesName(),s.getDescription());
+		return new BodySpecies(s.getSpeciesName(),s.getDescription(),s.getHumiditySpecies(),s.getTemperatureMinSpecies(),s.getTemperatureMaxSpecies());
 	}
 	public Species toEntity(BodySpecies bs) {
 		Species s = new Species();
 		s.setSpeciesName(bs.getSpeciesName());
 		s.setDescription(bs.getDescription());
+		s.setHumiditySpecies(bs.getHumidity());
+		s.setTemperatureMaxSpecies(bs.getTempMax());
+		s.setTemperatureMinSpecies(bs.getTempMin());
 		return s;
 	}
 
@@ -190,10 +193,14 @@ public class Factory {
 
 	public BodyTerrariumData toBody(TerrariumData td) {
 		BodyTerrariumData btd = new BodyTerrariumData();
+		if(td == null) {
+			System.out.println("terrariumData est null");
+			return null;
+		}
 		btd.date = timestampToString(td.getTime());
 		btd.humidity = td.getHumidity();
 		btd.temperature = td.getTemperature();
-		btd.id = td.getIdTerrarium();
+		btd.idTerrarium = td.getIdTerrarium();
 		return btd;
 	}
 

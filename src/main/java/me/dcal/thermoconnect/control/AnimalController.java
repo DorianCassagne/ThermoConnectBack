@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -141,7 +142,7 @@ public class AnimalController {
 	public int getAnimalData(@RequestBody BodyAnimalData body,HttpServletRequest request,
 			HttpServletResponse response, Model model) {
 		if(connexionService.validUser(body.bodyConnexion)){
-			if(connexionService.isAnimalUser(body.bodyConnexion.getLogin(),body.id)) {
+			if(connexionService.isAnimalUser(body.bodyConnexion.getLogin(),body.idAnimal)) {
 				animalService.addData(body);
 				return 1;
 			}
@@ -151,11 +152,22 @@ public class AnimalController {
 	}
 	@PostMapping(path = "/getAllAnimalData",consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public Set<BodyAnimalData> getAllAnimalData(@RequestBody BodyAnimal body,HttpServletRequest request,
+	public List<BodyAnimalData> getAllAnimalData(@RequestBody BodyAnimal body,HttpServletRequest request,
 			HttpServletResponse response, Model model) {
 		if(connexionService.validUser(body.bodyConnexion)){
 			if(connexionService.isAnimalUser(body.bodyConnexion.getLogin(),body.idAnimal)) {
-				animalService.getAllData(body);
+				return animalService.getAllData(body);
+			}
+		}
+		return null;
+	}
+	@PostMapping(path = "/getLastAnimalData",consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public BodyAnimalData getLastAnimalData(@RequestBody BodyAnimal body,HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		if(connexionService.validUser(body.bodyConnexion)){
+			if(connexionService.isAnimalUser(body.bodyConnexion.getLogin(),body.idAnimal)) {
+				return animalService.getLastData(body);
 			}
 		}
 		return null;
