@@ -64,7 +64,7 @@ public class Factory {
 	}
 	private Timestamp stringToTimeStamp(String time) {
 		try {
-		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		    Date parsedDate = (Date) dateFormat.parse(time);
 		    return  new java.sql.Timestamp(parsedDate.getTime());
 		} catch(Exception e) { 
@@ -134,7 +134,7 @@ public class Factory {
 	public BodyAnimal toEntity(Animal a) {
 		BodyAnimal ba = new BodyAnimal(new BodyConnexion(), 
 				a.getIdTerrarium().getIdTerrarium(),
-				new BodySpecies(a.getSpecies().getSpeciesName(), a.getSpecies().getDescription()),
+				toBody(speciesRepository.findById(a.getSpecies().getSpeciesName()).get()),
 				a.getNameAnimal(), a.getSex(), dateToString(a.getDateOfBirth()),
 				a.getDescription(),
 				a.getFood(), a.getIdAnimal());
@@ -149,12 +149,15 @@ public class Factory {
 	}
 
 	public BodySpecies toBody(Species s) {
-		return new BodySpecies(s.getSpeciesName(),s.getDescription());
+		return new BodySpecies(s.getSpeciesName(),s.getDescription(),s.getHumiditySpecies(),s.getTemperatureMinSpecies(),s.getTemperatureMaxSpecies());
 	}
 	public Species toEntity(BodySpecies bs) {
 		Species s = new Species();
 		s.setSpeciesName(bs.getSpeciesName());
 		s.setDescription(bs.getDescription());
+		s.setHumiditySpecies(bs.getHumidity());
+		s.setTemperatureMaxSpecies(bs.getTempMax());
+		s.setTemperatureMinSpecies(bs.getTempMin());
 		return s;
 	}
 

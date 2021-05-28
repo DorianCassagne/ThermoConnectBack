@@ -16,6 +16,13 @@ public class Species {
 	String speciesName;
 	@Column(name="description")
 	String description;
+	@Column(name="humidity_species")
+    Double humiditySpecies;
+	@Column(name="temperature_min_species")
+    Double temperatureMinSpecies;
+	@Column(name="temperature_max_species")
+    Double temperatureMaxSpecies;
+
 
 	@OneToMany( targetEntity=Animal.class, mappedBy="species" )
 	private List<Animal> animals = new ArrayList<>();
@@ -36,6 +43,24 @@ public class Species {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}	
+	public Double getHumiditySpecies() {
+		return humiditySpecies;
+	}
+	public void setHumiditySpecies(Double humiditySpecies) {
+		this.humiditySpecies = humiditySpecies;
+	}
+	public Double getTemperatureMinSpecies() {
+		return temperatureMinSpecies;
+	}
+	public void setTemperatureMinSpecies(Double temperatureMinSpecies) {
+		this.temperatureMinSpecies = temperatureMinSpecies;
+	}
+	public Double getTemperatureMaxSpecies() {
+		return temperatureMaxSpecies;
+	}
+	public void setTemperatureMaxSpecies(Double temperatureMaxSpecies) {
+		this.temperatureMaxSpecies = temperatureMaxSpecies;
 	}
 
 

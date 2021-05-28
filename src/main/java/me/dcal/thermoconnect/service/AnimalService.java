@@ -48,9 +48,11 @@ public class AnimalService {
 		if(picture != null) {
 			String fileName = picture.getOriginalFilename();
 			a.setUrlPicture(fileName);
+			a = animalRepository.save(a);
 			fileService.saveAnimalImage(body.bodyConnexion.getLogin(), a.getIdAnimal(), picture, fileName);
 		}
-		a = animalRepository.save(a);
+		else
+			a = animalRepository.save(a);
 		if(files !=null) {
 			for (MultipartFile multipartFile : files) {
 				AnimalPicture ap = new AnimalPicture();
