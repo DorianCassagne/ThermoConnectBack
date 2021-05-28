@@ -142,7 +142,7 @@ public class AnimalController {
 	public int getAnimalData(@RequestBody BodyAnimalData body,HttpServletRequest request,
 			HttpServletResponse response, Model model) {
 		if(connexionService.validUser(body.bodyConnexion)){
-			if(connexionService.isAnimalUser(body.bodyConnexion.getLogin(),body.id)) {
+			if(connexionService.isAnimalUser(body.bodyConnexion.getLogin(),body.idAnimal)) {
 				animalService.addData(body);
 				return 1;
 			}

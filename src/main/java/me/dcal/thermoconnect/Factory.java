@@ -101,17 +101,17 @@ public class Factory {
 	public AnimalData toEntity(BodyAnimalData bad) {
 		AnimalData ad = new  AnimalData();
 		AnimalDataId adi = new AnimalDataId();
-		adi.setIdAnimal(bad.id);
-		adi.setDateAnimalData(stringToDate(bad.date));
+		adi.setIdAnimal(bad.idAnimal);
+		adi.setDateAnimalData(stringToDate(bad.dateAnimalData));
 		ad.setAnimalDataId(adi);
-		ad.setWeight(bad.data);
+		ad.setWeight(bad.weight);
 		return ad;
 	}
 	public BodyAnimalData toBody(AnimalData ad) {
 		BodyAnimalData ba = new BodyAnimalData();
-		ba.data = ad.getWeight();
-		ba.date = dateToString(ad.getAnimalDataId().getDateAnimalData());
-		ba.id = ad.getAnimalDataId().getIdAnimal();
+		ba.weight = ad.getWeight();
+		ba.dateAnimalData = dateToString(ad.getAnimalDataId().getDateAnimalData());
+		ba.idAnimal = ad.getAnimalDataId().getIdAnimal();
 		return ba;
 		
 	}
