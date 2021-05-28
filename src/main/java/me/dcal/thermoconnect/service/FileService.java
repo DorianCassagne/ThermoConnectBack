@@ -7,8 +7,10 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.file.Paths;
 import java.util.Optional;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.apache.tomcat.jni.Directory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
@@ -29,6 +31,7 @@ public class FileService {
 	AnimalRepository animalRepository;
 	public final String fileStoragePath ;
 	public final String fileStaticStoragePath ;
+	Random rand = new Random();
 
 	public FileSystemResource getExampleFile() {
 		return this.getFile("jpeg.png");
@@ -51,9 +54,9 @@ public class FileService {
 	}
 	
 	public HttpEntity<byte[]> getStaticImage() throws IOException {
-
-		int randomNum = ThreadLocalRandom.current().nextInt(1, 2+ 1);
-	    RandomAccessFile f = new RandomAccessFile(fileStaticStoragePath+"/"+randomNum+".jpg", "r");
+		File d = new File(fileStaticStoragePath+"/");
+		File[] files = d.listFiles();
+	    RandomAccessFile f = new RandomAccessFile(files[rand.nextInt(files.length)], "r");
 	    byte[] b = new byte[(int)f.length()];
 	    f.readFully(b);
 	    HttpHeaders headers = new HttpHeaders();
