@@ -71,6 +71,8 @@ public class TerrariumService {
 			btds.add(factory.toBody(td));
 		}
 		return btds;
-		
+	}
+	public BodyTerrariumData getLastData(BodyTerrarium bt){
+		return factory.toBody(terrariumDataRepository.findFirst1FilterByIdTerrariumOrderByDate(bt.idTerrarium));
 	}
 }

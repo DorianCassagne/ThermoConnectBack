@@ -91,7 +91,7 @@ public class Factory {
 		TerrariumData td = new  TerrariumData();
 		TerrariumDataId tdi = new TerrariumDataId();
 		
-		tdi.setIdTerrarium(btd.id);
+		tdi.setIdTerrarium(btd.idTerrarium);
 		tdi.setTime(stringToTimeStamp(btd.date)); //TODO: time
 		td.setHumidity(btd.humidity);
 		td.setTemperature(btd.temperature);
@@ -193,10 +193,14 @@ public class Factory {
 
 	public BodyTerrariumData toBody(TerrariumData td) {
 		BodyTerrariumData btd = new BodyTerrariumData();
+		if(td == null) {
+			System.out.println("terrariumData est null");
+			return null;
+		}
 		btd.date = timestampToString(td.getTime());
 		btd.humidity = td.getHumidity();
 		btd.temperature = td.getTemperature();
-		btd.id = td.getIdTerrarium();
+		btd.idTerrarium = td.getIdTerrarium();
 		return btd;
 	}
 

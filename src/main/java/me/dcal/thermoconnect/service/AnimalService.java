@@ -102,6 +102,10 @@ public class AnimalService {
 		}
 		return bads;
 	}
+	public BodyAnimalData getLastData(BodyAnimal ba){
+		return factory.toBody(animalDataRepository.findFirst1FilterByIdAnimalOrderByDate(ba.getIdAnimal()));
+		
+	}
 	
 	public int deleteDocument(BodyAnimal ba) {
 		Animal a = animalRepository.findById(ba.getIdAnimal()).get();
