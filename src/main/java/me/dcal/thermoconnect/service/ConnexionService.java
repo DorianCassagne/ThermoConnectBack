@@ -3,7 +3,6 @@ package me.dcal.thermoconnect.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.spel.ast.OpAnd;
 import org.springframework.stereotype.Service;
 
 import me.dcal.thermoconnect.model.Animal;
@@ -55,7 +54,7 @@ public class ConnexionService {
 	
 	public boolean isAnimalUser(String userName,Integer idAnimal) {
 		Optional<Animal> o =  animalRepository.findById(idAnimal);
-		if(o.isEmpty())
+		if(!o.isPresent())
 			return false;
 		Animal a = o.get();
 		return a.getIdTerrarium().getUsername().getUsername().equals(userName);

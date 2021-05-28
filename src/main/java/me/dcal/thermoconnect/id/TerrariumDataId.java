@@ -1,20 +1,17 @@
 package me.dcal.thermoconnect.id;
 
 import java.io.Serializable;
-import java.sql.Time;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-import me.dcal.thermoconnect.model.Terrarium;
 
 @Embeddable
 public class TerrariumDataId implements Serializable {
 	
 
+	
+	private static final long serialVersionUID = 1L;
 	@Column(name = "id_terrarium")
 	Integer idTerrarium; 
 	@Column(name="time")

@@ -2,11 +2,7 @@ package me.dcal.thermoconnect.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.*;
-
-import me.dcal.thermoconnect.model.api.BodySpecies;
 
 @Entity
 @Table(name="species", schema = "thermoconnect")

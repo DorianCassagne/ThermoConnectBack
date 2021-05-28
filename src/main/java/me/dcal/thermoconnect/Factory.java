@@ -3,7 +3,6 @@ package me.dcal.thermoconnect;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +50,6 @@ public class Factory {
 
 	private Date stringToDate(String date) {
 		try {
-//			return new Date( new SimpleDateFormat("dd/MM/yyyy").parse(date).getTime());
 			return new Date( new SimpleDateFormat("yyyy-MM-dd").parse(date).getTime());
 			
 		} catch (Exception e) {
@@ -143,15 +141,13 @@ public class Factory {
 		
 		for(AnimalPicture ad :a.getAnimalPictures()) {
 			ba.getDocuments().add(ad.getAnimalPictureId().getNamePicture());
-//			getDocuments
-//			this.toBody(ad)
 		}
-//		ba.getDocuments().addAll(a.getAnimalDatas());	
 		return ba;
 	}
 
 	public BodySpecies toBody(Species s) {
-		return new BodySpecies(s.getSpeciesName(),s.getDescription(),s.getHumiditySpecies(),s.getTemperatureMinSpecies(),s.getTemperatureMaxSpecies());
+		return new BodySpecies(s.getSpeciesName(),s.getDescription(),s.getHumiditySpecies(),
+				s.getTemperatureMinSpecies(),s.getTemperatureMaxSpecies());
 	}
 	public Species toEntity(BodySpecies bs) {
 		Species s = new Species();

@@ -1,7 +1,6 @@
 package me.dcal.thermoconnect.service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -96,7 +95,7 @@ public class AnimalService {
 	
 	public List<BodyAnimalData> getAllData (BodyAnimal ba){
 		Animal a = animalRepository.findById(ba.getIdAnimal()).get();
-		List<BodyAnimalData> bads = new ArrayList();
+		List<BodyAnimalData> bads = new ArrayList<BodyAnimalData>();
 		for(AnimalData ad : a.getAnimalDatas()) {
 			bads.add(factory.toBody(ad));
 		}
@@ -121,11 +120,5 @@ public class AnimalService {
 		
 	}
 	
-//	public BodyAnimal getAnimal(int idAnimal) {
-//		animalRepository.findById(idAnimal).get().getAnimalPictures();
-//		return 
-//		return null;
-//	}
-	
-//	public List<Bo>
+
 }

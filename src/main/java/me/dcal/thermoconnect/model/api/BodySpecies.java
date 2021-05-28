@@ -1,6 +1,6 @@
 package me.dcal.thermoconnect.model.api;
 
-import me.dcal.thermoconnect.model.Species;
+
 
 public class BodySpecies {
 

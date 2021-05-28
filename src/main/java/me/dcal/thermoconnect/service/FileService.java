@@ -6,8 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -46,7 +44,7 @@ public class FileService {
 	
 	public boolean deleteAnimal(BodyAnimal ba) {
 		Optional<Animal> oa =  animalRepository.findById(ba.getIdAnimal());
-		if(oa.isEmpty())
+		if(!oa.isPresent())
 			return false;
 		animalRepository.delete(oa.get());
 		return true;
@@ -61,12 +59,11 @@ public class FileService {
 	    HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.IMAGE_JPEG);
 	    headers.setContentLength(b.length);
+	    f.close();
 
 	    return new HttpEntity<byte[]>(b, headers);
 	}
 	public FileSystemResource getAnimalDocument(BodyAnimal ba) {
-		Animal a = animalRepository.findById(ba.getIdAnimal()).get();
-//		returna.getUrlPicture();
 		if(ba.getDocuments().size() ==1 )
 			return getFile(animalImagePath(ba.getBodyConnexion().getLogin(), ba.getIdAnimal())+"/"+ba.getDocuments().get(0));
 		return null;
@@ -77,7 +74,7 @@ public class FileService {
 		this.fileStoragePath = Paths.get(fileStorageProperties.getUploadDir()).toString();
 		this.fileStaticStoragePath = Paths.get(fileStorageProperties.getStaticDir()).toString();
 		File file = new File(fileStoragePath);
-		boolean dirCreated = file.mkdir();
+		file.mkdir();
 	}
 
 	public boolean saveAnimalImage(String username,int idAnimal, MultipartFile file,String fileName) {
@@ -116,6 +113,7 @@ public class FileService {
 		return new FileSystemResource(new File(fileStoragePath+"/"+filename));
 	}
 
+	@SuppressWarnings("unused")
 	private boolean renameFile( String newfilename,String old,  String filename) {
 
 		try{
@@ -147,6 +145,7 @@ public class FileService {
 
 	}
 
+	@SuppressWarnings("unused")
 	private boolean deleteFile(String filename) {
 		File file = new File(fileStoragePath +"/"+ filename);
 

@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import me.dcal.thermoconnect.Factory;
-import me.dcal.thermoconnect.model.Species;
 import me.dcal.thermoconnect.model.api.BodyConnexion;
 import me.dcal.thermoconnect.model.api.BodySpecies;
-import me.dcal.thermoconnect.model.api.BodyTerrarium;
 import me.dcal.thermoconnect.service.ConnexionService;
 import me.dcal.thermoconnect.service.SpeciesService;
 
@@ -39,7 +37,7 @@ public class SpeciesController {
 		return null;
 	}
 	
-	//a desactiver pour la prod
+	//need to be deactivated in production environment
 	@PostMapping(path = "/addSpecies",consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public boolean addSpecies(@RequestBody BodySpecies bodyCo,HttpServletRequest request,

@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import me.dcal.thermoconnect.id.TerrariumDataId;
-import me.dcal.thermoconnect.model.AnimalData;
 import me.dcal.thermoconnect.model.TerrariumData;
 
 @Repository
