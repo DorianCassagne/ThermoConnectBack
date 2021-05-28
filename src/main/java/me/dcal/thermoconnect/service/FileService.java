@@ -58,7 +58,6 @@ public class FileService {
 			return null;
 		}
 	    RandomAccessFile f = new RandomAccessFile(files[rand.nextInt(files.length)], "r");
-	    System.out.println(f);
 	    byte[] b = new byte[(int)f.length()];
 	    f.readFully(b);
 	    HttpHeaders headers = new HttpHeaders();
