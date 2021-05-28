@@ -98,7 +98,7 @@ ALTER SEQUENCE thermoconnect."animal_id_animal_seq" OWNED BY thermoconnect.anima
 
 CREATE TABLE thermoconnect.species (
     "species_name" character varying(32) NOT NULL,
-    description text;
+    description text,
     "humidity_species" double precision,
     "temperature_min_species" double precision,
     "temperature_max_species" double precision
