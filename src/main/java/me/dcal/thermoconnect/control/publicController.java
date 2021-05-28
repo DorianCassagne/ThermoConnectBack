@@ -20,7 +20,7 @@ public class publicController {
 
 	@RequestMapping("/pic")
 	@ResponseBody
-	public HttpEntity<byte[]> getArticleImage() throws IOException {
+	public HttpEntity<byte[]> getRandomImage() throws IOException {
 	    return fileService.getStaticImage();
 	}
 }
