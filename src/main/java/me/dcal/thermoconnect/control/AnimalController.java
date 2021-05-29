@@ -42,8 +42,7 @@ public class AnimalController {
 			HttpServletResponse response, Model model) {
 		if(connexionService.validUser(body.bodyConnexion)){
 			if(connexionService.isTerrariumUser(body.bodyConnexion.getLogin(),body.terrarium)) {
-				animalService.saveAnimal(body, picture, files);
-				return 1;
+				return animalService.saveAnimal(body, picture, files);
 			}
 			return 0;
 		}

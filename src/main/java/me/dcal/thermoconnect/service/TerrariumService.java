@@ -33,12 +33,12 @@ public class TerrariumService {
 		return true;
 	}
 	
-	public boolean addTerrarium(BodyTerrarium bt) {
+	public Integer addTerrarium(BodyTerrarium bt) {
 		Terrarium t = factory.toEntity(bt);
 		if(terrariumRepository.findAllByUsernameAndNameTerrarium(t.getUsername(),t.getNameTerrarium()).size() !=0)
-			return false;
+			return 0;
 		terrariumRepository.save(t);
-		return true;
+		return t.getIdTerrarium();
 	}
 	public boolean modifTerrarium(BodyTerrarium bt) {
 		Terrarium t = factory.toEntity(bt);

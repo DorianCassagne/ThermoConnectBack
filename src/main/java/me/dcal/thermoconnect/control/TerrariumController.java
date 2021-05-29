@@ -31,9 +31,7 @@ public class TerrariumController {
 			HttpServletResponse response, Model model) {
 		
 		if(connexionService.validUser(bodyTerra.bodyConnexion)){
-			if(terrariumService.addTerrarium(bodyTerra))
-				return 1;
-			return 0;
+			return(terrariumService.addTerrarium(bodyTerra));
 		}
 		return -1;
 	}

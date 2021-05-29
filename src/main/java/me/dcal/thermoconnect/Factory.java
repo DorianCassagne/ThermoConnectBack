@@ -65,10 +65,10 @@ public class Factory {
 	private Timestamp stringToTimeStamp(String time) {
 		try {
 		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		    Date parsedDate = (Date) dateFormat.parse(time);
-		    return  new java.sql.Timestamp(parsedDate.getTime());
+		    Date parsedDate = new Date(dateFormat.parse(time).getTime());
+		    return  new Timestamp(parsedDate.getTime());
 		} catch(Exception e) { 
-		    System.out.println("Timestamp not valid expected: yyyy-MM-dd hh:mm:ss   actual :");
+		    System.out.println("Timestamp not valid expected: yyyy-MM-dd hh:mm:ss   actual :" + time);
 		    return null;
 		}
 	}
@@ -92,7 +92,8 @@ public class Factory {
 		TerrariumDataId tdi = new TerrariumDataId();
 		
 		tdi.setIdTerrarium(btd.idTerrarium);
-		tdi.setTime(stringToTimeStamp(btd.date)); //TODO: time
+		tdi.setTime(stringToTimeStamp(btd.date));
+		td.setTerrariumDataId(tdi);
 		td.setHumidity(btd.humidity);
 		td.setTemperature(btd.temperature);
 		return td;
@@ -189,12 +190,12 @@ public class Factory {
 		return t;
 	}
 
-	public BodyTerrariumData toBody(TerrariumData td) {
-		BodyTerrariumData btd = new BodyTerrariumData();
-		if(td == null) {
-			System.out.println("terrariumData est null");
+	public BodyTerrariumData toBody(TerrariumData td) {if(td == null) {
+		System.out.println("terrariumData est null");
 			return null;
 		}
+		BodyTerrariumData btd = new BodyTerrariumData();
+		
 		btd.date = timestampToString(td.getTime());
 		btd.humidity = td.getHumidity();
 		btd.temperature = td.getTemperature();
