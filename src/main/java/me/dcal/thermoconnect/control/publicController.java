@@ -23,4 +23,10 @@ public class publicController {
 	public HttpEntity<byte[]> getRandomImage() throws IOException {
 	    return fileService.getStaticImage();
 	}
+	
+	@RequestMapping("/alive")
+	@ResponseBody
+	public Integer isAlive(){
+	    return 1;
+	}
 }
