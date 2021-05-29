@@ -65,7 +65,7 @@ public class AnimalService {
 			}
 		}
 		
-		return 1;
+		return a.getIdAnimal();
 	}
 	
 	public Integer saveDocument(BodyAnimal body,List<MultipartFile> files) {
