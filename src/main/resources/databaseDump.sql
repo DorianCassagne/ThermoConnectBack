@@ -64,7 +64,7 @@ CREATE TABLE thermoconnect."animal_data" (
 CREATE TABLE thermoconnect."animal_picture" (
     "id_animal" integer NOT NULL,
     url character varying(256) NOT NULL,
-    "name_picture" character varying(32) NOT NULL
+    "name_picture" character varying(128) NOT NULL
 );
 
 

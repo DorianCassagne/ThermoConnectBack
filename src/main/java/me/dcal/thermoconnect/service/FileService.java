@@ -86,6 +86,12 @@ public class FileService {
 		saveFile(file, animalPath(username, idAnimal)+fileName);
 		return true;
 	}
+	
+	public boolean deleteAnimalImage(String username,int idAnimal,String fileName) {
+		initUserAnimalFolder(username, idAnimal);
+		deleteFile(animalImagePath(username, idAnimal)+fileName);
+		return true;
+	}
 
 	
 	public boolean saveAnimalDocument(String username,int idAnimal, MultipartFile file,String fileName) {

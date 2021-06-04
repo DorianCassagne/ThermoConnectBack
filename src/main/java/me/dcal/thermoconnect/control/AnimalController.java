@@ -49,6 +49,21 @@ public class AnimalController {
 		return -1;
 	}
 	
+	@PostMapping(path = "/modifAnimal",consumes = {MediaType.APPLICATION_JSON_VALUE,
+			MediaType.MULTIPART_FORM_DATA_VALUE}, produces = "application/json")
+	@ResponseBody
+	public Integer modifAnimal(@RequestPart("description")  BodyAnimal body,
+			@RequestPart(name = "picture",required = false) MultipartFile picture, HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		if(connexionService.validUser(body.bodyConnexion)){
+			if(connexionService.isTerrariumUser(body.bodyConnexion.getLogin(),body.terrarium)) {
+				return animalService.modifAnimal(body, picture);
+			}
+			return 0;
+		}
+		return -1;
+	}
+	
 	@PostMapping(path = "/deleteAnimal",consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public Integer deleteAnimal(@RequestBody BodyAnimal body,HttpServletRequest request,
@@ -84,7 +99,7 @@ public class AnimalController {
 	public Integer deleteDocument(@RequestBody  BodyAnimal body,
 			HttpServletRequest request,
 			HttpServletResponse response, Model model) {
-		
+		System.out.println(body.getDocuments());
 		if(connexionService.validUser(body.bodyConnexion)){
 			if(connexionService.isAnimalUser(body.bodyConnexion.getLogin(), body.getIdAnimal())) {
 				return animalService.deleteDocument(body);

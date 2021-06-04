@@ -2,7 +2,6 @@ package me.dcal.thermoconnect.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,6 +67,28 @@ public class AnimalService {
 		return a.getIdAnimal();
 	}
 	
+	public Integer modifAnimal(BodyAnimal body, MultipartFile picture) {
+		
+//		Animal a = factory.toEntity(body);
+		Animal a = animalRepository.findById(body.getIdAnimal()).get();
+		a.setSex(body.sex);
+		a.setDescription(body.description);
+		if(picture != null) {
+			if(a.getUrlPicture() !=null || !"".equals(a.getUrlPicture())) {
+				fileService.deleteAnimalImage(body.bodyConnexion.getLogin(), a.getIdAnimal(), a.getUrlPicture());
+			}
+			String fileName = picture.getOriginalFilename();
+			a.setUrlPicture(fileName);
+			a = animalRepository.save(a);
+			fileService.saveAnimalImage(body.bodyConnexion.getLogin(), a.getIdAnimal(), picture, fileName);
+		}
+		else
+			a = animalRepository.save(a);
+		
+		
+		return a.getIdAnimal();
+	}
+	
 	public Integer saveDocument(BodyAnimal body,List<MultipartFile> files) {
 		for (MultipartFile multipartFile : files) {
 			AnimalPicture ap = new AnimalPicture();
@@ -107,12 +128,14 @@ public class AnimalService {
 	}
 	
 	public int deleteDocument(BodyAnimal ba) {
-		Animal a = animalRepository.findById(ba.getIdAnimal()).get();
 		int count = 0;
-		Set<AnimalPicture> ap =  a.getAnimalPictures();
+		List<AnimalPicture> ap = animalPictureRepository.findPictureByIdAnimal(ba.getIdAnimal());
+		System.out.println(ap);
 		for (AnimalPicture animalPicture : ap) {
+			System.out.println(animalPicture.getAnimalPictureId().getNamePicture());
 			if(ba.documents.contains(animalPicture.getAnimalPictureId().getNamePicture())) {
 				animalPictureRepository.delete(animalPicture);
+				fileService.deleteAnimalImage(ba.getBodyConnexion().getLogin(), ba.getIdAnimal(), animalPicture.getAnimalPictureId().getNamePicture());
 				count++;
 			}
 		}
