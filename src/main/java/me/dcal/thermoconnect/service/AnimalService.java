@@ -69,10 +69,10 @@ public class AnimalService {
 	
 	public Integer modifAnimal(BodyAnimal body, MultipartFile picture) {
 		
-//		Animal a = factory.toEntity(body);
 		Animal a = animalRepository.findById(body.getIdAnimal()).get();
 		a.setSex(body.sex);
 		a.setDescription(body.description);
+		a.setFood(body.food);
 		if(picture != null) {
 			if(a.getUrlPicture() !=null || !"".equals(a.getUrlPicture())) {
 				fileService.deleteAnimalImage(body.bodyConnexion.getLogin(), a.getIdAnimal(), a.getUrlPicture());
@@ -130,9 +130,7 @@ public class AnimalService {
 	public int deleteDocument(BodyAnimal ba) {
 		int count = 0;
 		List<AnimalPicture> ap = animalPictureRepository.findPictureByIdAnimal(ba.getIdAnimal());
-		System.out.println(ap);
 		for (AnimalPicture animalPicture : ap) {
-			System.out.println(animalPicture.getAnimalPictureId().getNamePicture());
 			if(ba.documents.contains(animalPicture.getAnimalPictureId().getNamePicture())) {
 				animalPictureRepository.delete(animalPicture);
 				fileService.deleteAnimalImage(ba.getBodyConnexion().getLogin(), ba.getIdAnimal(), animalPicture.getAnimalPictureId().getNamePicture());
