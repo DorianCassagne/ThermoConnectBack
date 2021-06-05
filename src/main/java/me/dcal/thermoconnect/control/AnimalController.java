@@ -99,7 +99,6 @@ public class AnimalController {
 	public Integer deleteDocument(@RequestBody  BodyAnimal body,
 			HttpServletRequest request,
 			HttpServletResponse response, Model model) {
-		System.out.println(body.getDocuments());
 		if(connexionService.validUser(body.bodyConnexion)){
 			if(connexionService.isAnimalUser(body.bodyConnexion.getLogin(), body.getIdAnimal())) {
 				return animalService.deleteDocument(body);
