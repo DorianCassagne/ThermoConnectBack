@@ -64,11 +64,11 @@ public class Factory {
 	}
 	private Timestamp stringToTimeStamp(String time) {
 		try {
-		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		    Date parsedDate = new Date(dateFormat.parse(time).getTime());
 		    return  new Timestamp(parsedDate.getTime());
 		} catch(Exception e) { 
-		    System.out.println("Timestamp not valid expected: yyyy-MM-dd hh:mm:ss   actual :" + time);
+		    System.out.println("Timestamp not valid expected: yyyy-MM-dd HH:mm:ss   actual :" + time);
 		    return null;
 		}
 	}
